@@ -1,0 +1,186 @@
+"use strict";
+/*
+ * ATTENTION: An "eval-source-map" devtool has been used.
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file with attached SourceMaps in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+(() => {
+var exports = {};
+exports.id = "app/api/chat/route";
+exports.ids = ["app/api/chat/route"];
+exports.modules = {
+
+/***/ "next/dist/compiled/next-server/app-route.runtime.dev.js":
+/*!**************************************************************************!*\
+  !*** external "next/dist/compiled/next-server/app-route.runtime.dev.js" ***!
+  \**************************************************************************/
+/***/ ((module) => {
+
+module.exports = require("next/dist/compiled/next-server/app-route.runtime.dev.js");
+
+/***/ }),
+
+/***/ "fs":
+/*!*********************!*\
+  !*** external "fs" ***!
+  \*********************/
+/***/ ((module) => {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ "http":
+/*!***********************!*\
+  !*** external "http" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("http");
+
+/***/ }),
+
+/***/ "https":
+/*!************************!*\
+  !*** external "https" ***!
+  \************************/
+/***/ ((module) => {
+
+module.exports = require("https");
+
+/***/ }),
+
+/***/ "node:fs":
+/*!**************************!*\
+  !*** external "node:fs" ***!
+  \**************************/
+/***/ ((module) => {
+
+module.exports = require("node:fs");
+
+/***/ }),
+
+/***/ "node:stream":
+/*!******************************!*\
+  !*** external "node:stream" ***!
+  \******************************/
+/***/ ((module) => {
+
+module.exports = require("node:stream");
+
+/***/ }),
+
+/***/ "node:stream/web":
+/*!**********************************!*\
+  !*** external "node:stream/web" ***!
+  \**********************************/
+/***/ ((module) => {
+
+module.exports = require("node:stream/web");
+
+/***/ }),
+
+/***/ "path":
+/*!***********************!*\
+  !*** external "path" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ "punycode":
+/*!***************************!*\
+  !*** external "punycode" ***!
+  \***************************/
+/***/ ((module) => {
+
+module.exports = require("punycode");
+
+/***/ }),
+
+/***/ "stream":
+/*!*************************!*\
+  !*** external "stream" ***!
+  \*************************/
+/***/ ((module) => {
+
+module.exports = require("stream");
+
+/***/ }),
+
+/***/ "url":
+/*!**********************!*\
+  !*** external "url" ***!
+  \**********************/
+/***/ ((module) => {
+
+module.exports = require("url");
+
+/***/ }),
+
+/***/ "util":
+/*!***********************!*\
+  !*** external "util" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("util");
+
+/***/ }),
+
+/***/ "worker_threads":
+/*!*********************************!*\
+  !*** external "worker_threads" ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = require("worker_threads");
+
+/***/ }),
+
+/***/ "zlib":
+/*!***********************!*\
+  !*** external "zlib" ***!
+  \***********************/
+/***/ ((module) => {
+
+module.exports = require("zlib");
+
+/***/ }),
+
+/***/ "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fchat%2Froute&page=%2Fapi%2Fchat%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fchat%2Froute.ts&appDir=C%3A%5CUsers%5Cfinnr%5Crestaurant-ai-chatbot%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5Cfinnr%5Crestaurant-ai-chatbot&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fchat%2Froute&page=%2Fapi%2Fchat%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fchat%2Froute.ts&appDir=C%3A%5CUsers%5Cfinnr%5Crestaurant-ai-chatbot%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5Cfinnr%5Crestaurant-ai-chatbot&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D! ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   headerHooks: () => (/* binding */ headerHooks),\n/* harmony export */   originalPathname: () => (/* binding */ originalPathname),\n/* harmony export */   requestAsyncStorage: () => (/* binding */ requestAsyncStorage),\n/* harmony export */   routeModule: () => (/* binding */ routeModule),\n/* harmony export */   serverHooks: () => (/* binding */ serverHooks),\n/* harmony export */   staticGenerationAsyncStorage: () => (/* binding */ staticGenerationAsyncStorage),\n/* harmony export */   staticGenerationBailout: () => (/* binding */ staticGenerationBailout)\n/* harmony export */ });\n/* harmony import */ var next_dist_server_future_route_modules_app_route_module_compiled__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/server/future/route-modules/app-route/module.compiled */ \"(rsc)/./node_modules/next/dist/server/future/route-modules/app-route/module.compiled.js\");\n/* harmony import */ var next_dist_server_future_route_modules_app_route_module_compiled__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_dist_server_future_route_modules_app_route_module_compiled__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var next_dist_server_future_route_kind__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! next/dist/server/future/route-kind */ \"(rsc)/./node_modules/next/dist/server/future/route-kind.js\");\n/* harmony import */ var C_Users_finnr_restaurant_ai_chatbot_app_api_chat_route_ts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app/api/chat/route.ts */ \"(rsc)/./app/api/chat/route.ts\");\n\n\n\n// We inject the nextConfigOutput here so that we can use them in the route\n// module.\nconst nextConfigOutput = \"\"\nconst routeModule = new next_dist_server_future_route_modules_app_route_module_compiled__WEBPACK_IMPORTED_MODULE_0__.AppRouteRouteModule({\n    definition: {\n        kind: next_dist_server_future_route_kind__WEBPACK_IMPORTED_MODULE_1__.RouteKind.APP_ROUTE,\n        page: \"/api/chat/route\",\n        pathname: \"/api/chat\",\n        filename: \"route\",\n        bundlePath: \"app/api/chat/route\"\n    },\n    resolvedPagePath: \"C:\\\\Users\\\\finnr\\\\restaurant-ai-chatbot\\\\app\\\\api\\\\chat\\\\route.ts\",\n    nextConfigOutput,\n    userland: C_Users_finnr_restaurant_ai_chatbot_app_api_chat_route_ts__WEBPACK_IMPORTED_MODULE_2__\n});\n// Pull out the exports that we need to expose from the module. This should\n// be eliminated when we've moved the other routes to the new format. These\n// are used to hook into the route.\nconst { requestAsyncStorage, staticGenerationAsyncStorage, serverHooks, headerHooks, staticGenerationBailout } = routeModule;\nconst originalPathname = \"/api/chat/route\";\n\n\n//# sourceMappingURL=app-route.js.map//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHJzYykvLi9ub2RlX21vZHVsZXMvbmV4dC9kaXN0L2J1aWxkL3dlYnBhY2svbG9hZGVycy9uZXh0LWFwcC1sb2FkZXIuanM/bmFtZT1hcHAlMkZhcGklMkZjaGF0JTJGcm91dGUmcGFnZT0lMkZhcGklMkZjaGF0JTJGcm91dGUmYXBwUGF0aHM9JnBhZ2VQYXRoPXByaXZhdGUtbmV4dC1hcHAtZGlyJTJGYXBpJTJGY2hhdCUyRnJvdXRlLnRzJmFwcERpcj1DJTNBJTVDVXNlcnMlNUNmaW5uciU1Q3Jlc3RhdXJhbnQtYWktY2hhdGJvdCU1Q2FwcCZwYWdlRXh0ZW5zaW9ucz10c3gmcGFnZUV4dGVuc2lvbnM9dHMmcGFnZUV4dGVuc2lvbnM9anN4JnBhZ2VFeHRlbnNpb25zPWpzJnJvb3REaXI9QyUzQSU1Q1VzZXJzJTVDZmlubnIlNUNyZXN0YXVyYW50LWFpLWNoYXRib3QmaXNEZXY9dHJ1ZSZ0c2NvbmZpZ1BhdGg9dHNjb25maWcuanNvbiZiYXNlUGF0aD0mYXNzZXRQcmVmaXg9Jm5leHRDb25maWdPdXRwdXQ9JnByZWZlcnJlZFJlZ2lvbj0mbWlkZGxld2FyZUNvbmZpZz1lMzAlM0QhIiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7O0FBQXNHO0FBQ3ZDO0FBQytCO0FBQzlGO0FBQ0E7QUFDQTtBQUNBLHdCQUF3QixnSEFBbUI7QUFDM0M7QUFDQSxjQUFjLHlFQUFTO0FBQ3ZCO0FBQ0E7QUFDQTtBQUNBO0FBQ0EsS0FBSztBQUNMO0FBQ0E7QUFDQSxZQUFZO0FBQ1osQ0FBQztBQUNEO0FBQ0E7QUFDQTtBQUNBLFFBQVEsdUdBQXVHO0FBQy9HO0FBQ2lKOztBQUVqSiIsInNvdXJjZXMiOlsid2VicGFjazovL3Jlc3RhdXJhbnQtYWktY2hhdGJvdC8/Y2Q4ZCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBBcHBSb3V0ZVJvdXRlTW9kdWxlIH0gZnJvbSBcIm5leHQvZGlzdC9zZXJ2ZXIvZnV0dXJlL3JvdXRlLW1vZHVsZXMvYXBwLXJvdXRlL21vZHVsZS5jb21waWxlZFwiO1xuaW1wb3J0IHsgUm91dGVLaW5kIH0gZnJvbSBcIm5leHQvZGlzdC9zZXJ2ZXIvZnV0dXJlL3JvdXRlLWtpbmRcIjtcbmltcG9ydCAqIGFzIHVzZXJsYW5kIGZyb20gXCJDOlxcXFxVc2Vyc1xcXFxmaW5uclxcXFxyZXN0YXVyYW50LWFpLWNoYXRib3RcXFxcYXBwXFxcXGFwaVxcXFxjaGF0XFxcXHJvdXRlLnRzXCI7XG4vLyBXZSBpbmplY3QgdGhlIG5leHRDb25maWdPdXRwdXQgaGVyZSBzbyB0aGF0IHdlIGNhbiB1c2UgdGhlbSBpbiB0aGUgcm91dGVcbi8vIG1vZHVsZS5cbmNvbnN0IG5leHRDb25maWdPdXRwdXQgPSBcIlwiXG5jb25zdCByb3V0ZU1vZHVsZSA9IG5ldyBBcHBSb3V0ZVJvdXRlTW9kdWxlKHtcbiAgICBkZWZpbml0aW9uOiB7XG4gICAgICAgIGtpbmQ6IFJvdXRlS2luZC5BUFBfUk9VVEUsXG4gICAgICAgIHBhZ2U6IFwiL2FwaS9jaGF0L3JvdXRlXCIsXG4gICAgICAgIHBhdGhuYW1lOiBcIi9hcGkvY2hhdFwiLFxuICAgICAgICBmaWxlbmFtZTogXCJyb3V0ZVwiLFxuICAgICAgICBidW5kbGVQYXRoOiBcImFwcC9hcGkvY2hhdC9yb3V0ZVwiXG4gICAgfSxcbiAgICByZXNvbHZlZFBhZ2VQYXRoOiBcIkM6XFxcXFVzZXJzXFxcXGZpbm5yXFxcXHJlc3RhdXJhbnQtYWktY2hhdGJvdFxcXFxhcHBcXFxcYXBpXFxcXGNoYXRcXFxccm91dGUudHNcIixcbiAgICBuZXh0Q29uZmlnT3V0cHV0LFxuICAgIHVzZXJsYW5kXG59KTtcbi8vIFB1bGwgb3V0IHRoZSBleHBvcnRzIHRoYXQgd2UgbmVlZCB0byBleHBvc2UgZnJvbSB0aGUgbW9kdWxlLiBUaGlzIHNob3VsZFxuLy8gYmUgZWxpbWluYXRlZCB3aGVuIHdlJ3ZlIG1vdmVkIHRoZSBvdGhlciByb3V0ZXMgdG8gdGhlIG5ldyBmb3JtYXQuIFRoZXNlXG4vLyBhcmUgdXNlZCB0byBob29rIGludG8gdGhlIHJvdXRlLlxuY29uc3QgeyByZXF1ZXN0QXN5bmNTdG9yYWdlLCBzdGF0aWNHZW5lcmF0aW9uQXN5bmNTdG9yYWdlLCBzZXJ2ZXJIb29rcywgaGVhZGVySG9va3MsIHN0YXRpY0dlbmVyYXRpb25CYWlsb3V0IH0gPSByb3V0ZU1vZHVsZTtcbmNvbnN0IG9yaWdpbmFsUGF0aG5hbWUgPSBcIi9hcGkvY2hhdC9yb3V0ZVwiO1xuZXhwb3J0IHsgcm91dGVNb2R1bGUsIHJlcXVlc3RBc3luY1N0b3JhZ2UsIHN0YXRpY0dlbmVyYXRpb25Bc3luY1N0b3JhZ2UsIHNlcnZlckhvb2tzLCBoZWFkZXJIb29rcywgc3RhdGljR2VuZXJhdGlvbkJhaWxvdXQsIG9yaWdpbmFsUGF0aG5hbWUsICB9O1xuXG4vLyMgc291cmNlTWFwcGluZ1VSTD1hcHAtcm91dGUuanMubWFwIl0sIm5hbWVzIjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fchat%2Froute&page=%2Fapi%2Fchat%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fchat%2Froute.ts&appDir=C%3A%5CUsers%5Cfinnr%5Crestaurant-ai-chatbot%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5Cfinnr%5Crestaurant-ai-chatbot&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!\n");
+
+/***/ }),
+
+/***/ "(rsc)/./app/api/chat/route.ts":
+/*!*******************************!*\
+  !*** ./app/api/chat/route.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   POST: () => (/* binding */ POST)\n/* harmony export */ });\n/* harmony import */ var next_dist_server_web_exports_next_response__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next/dist/server/web/exports/next-response */ \"(rsc)/./node_modules/next/dist/server/web/exports/next-response.js\");\n/* harmony import */ var openai__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! openai */ \"(rsc)/./node_modules/openai/index.mjs\");\n\n\nconst openai = new openai__WEBPACK_IMPORTED_MODULE_1__[\"default\"]({\n    apiKey: process.env.OPENAI_API_KEY\n});\n// POST /api/chat\n// Accepts: { message: string, restaurantContext?: string, menuData?: MenuItem[], conversationHistory?: Message[] }\n// The menuData should be fetched from the admin dashboard's menu management system\n// and passed to this endpoint to provide up-to-date menu information to the chatbot\nasync function POST(request) {\n    try {\n        const { message, restaurantContext, menuData, conversationHistory } = await request.json();\n        if (!message) {\n            return next_dist_server_web_exports_next_response__WEBPACK_IMPORTED_MODULE_0__[\"default\"].json({\n                error: \"Message is required\"\n            }, {\n                status: 400\n            });\n        }\n        // Build system message with hybrid approach - restaurant-specific data first, controlled general knowledge\n        let systemMessage = `You are a professional restaurant AI assistant using a HYBRID SYSTEM. Follow these strict guidelines:\n\n🚨 CRITICAL: NEVER include the restaurant name in your responses unless the user specifically asks \"What restaurant is this?\" or similar questions about the restaurant name. For greetings like \"hi\" or \"hello\", respond naturally without mentioning the restaurant name.\n\n🎯 PRIMARY DATA SOURCE: RESTAURANT-SPECIFIC INFORMATION\n- ALWAYS prioritize information from the restaurant's actual data (menu, hours, contact info)\n- Use restaurant-specific information as the foundation for ALL responses\n- Only reference items, prices, and details that are actually on the restaurant's menu\n\n🛡️ CONTROLLED GENERAL KNOWLEDGE (Secondary)\nYou may use general knowledge ONLY for:\n- Food safety information (with proper disclaimers)\n- Common dietary restrictions (vegetarian, vegan, gluten-free)\n- Allergy information (with strict disclaimers)\n- General restaurant etiquette\n\n❌ STRICT LIMITATIONS - NEVER DO:\n- Recommend items not on the restaurant's menu\n- Provide pricing for items not in the restaurant's data\n- Give medical advice about allergies\n- Discuss competitor restaurants\n- Make claims about ingredients not verified in restaurant data\n- Provide general food recommendations outside the restaurant's offerings\n\n📋 RESPONSE GUIDELINES (in order of importance):\n\n1. PROFESSIONAL AND CONSISTENT FORMATTING:\n   - Always use proper capitalization and punctuation\n   - Format prices consistently: $XX\n   - Use bullet points for lists: • Item\n   - Structure information clearly with line breaks\n   - Maintain consistent tone throughout\n\n2. CONCISE:\n   - Keep responses to 2-3 sentences maximum\n   - Get straight to the point\n   - Avoid unnecessary words or repetition\n   - Use active voice\n\n3. CLEAR:\n   - Answer the specific question asked\n   - Provide exact information (prices, times, ingredients)\n   - Use simple, direct language\n   - Avoid ambiguity\n\n4. FRIENDLY:\n   - Use warm, welcoming tone\n   - Be helpful and accommodating\n   - Show enthusiasm for the restaurant\n   - End with helpful follow-up when appropriate\n\n🔒 SAFETY AND LIABILITY PROTECTION:\n- For allergies: List ONLY safe dishes from the restaurant's menu\n- ALWAYS end allergy responses with: \"For your safety, please inform our staff about any dietary restrictions when ordering.\"\n- For dietary preferences: End with: \"Please inform our staff about any dietary restrictions when ordering.\"\n- Never provide medical advice\n- Always recommend speaking with staff for dietary concerns\n\n📝 FORMATTING RULES:\n\nHOURS FORMATTING:\n- Always start with \"Our hours are:\" or \"We're open:\"\n- Keep day and time on the same line\n- Use consistent format: \"Day-Day time-time\"\n- Separate different day groups with commas\n- Always end with a period\n\nMENU FORMATTING:\n- Always include price in format: \"Item Name ($XX)\"\n- Always include category: \"Item Name ($XX) - [Category]\"\n- Keep descriptions concise (1-2 phrases max)\n- Use bullet points for multiple items: \"• Item Name ($XX) - Description\"\n- Group by categories when listing multiple items\n- When asked about categories, provide the exact category from menu data\n\nCONTACT INFORMATION FORMATTING:\n- Phone: \"You can reach us at (555) 123-4567.\" (keep phone numbers on single line)\n- Email: \"Email us at info@restaurant.com.\" (keep email addresses on single line)\n- Address: \"We're located at [address].\" (keep addresses simple, no additional links)\n\nCONTEXT AWARENESS:\n- When users ask follow-up questions about menu items, understand they are referring to the most recently discussed menu item\n- Always maintain awareness of what menu item was just discussed\n- If restaurant data is incomplete, provide the most accurate information available and note any limitations\n\nDIRECT RESPONSE GUIDELINES:\n- Answer questions directly and concisely\n- When asked about menu categories (appetizer, entree, etc.), provide the exact category from the menu data\n- Don't repeat information already provided in the conversation\n- Be specific: \"Yes, the Wings are an appetizer\" instead of repeating the full description\n- For location questions, include the city and state: \"Denver, Colorado\" not just \"Denver, CO\"\n- NEVER repeat the welcome message or restaurant name unless explicitly asked\n- For simple greetings like \"hi\" or \"hello\", respond naturally without repeating the welcome\n- NEVER include the restaurant name in responses unless specifically asked about the restaurant name\n- Keep responses focused on the user's question without unnecessary restaurant branding\n\nRESPONSE VALIDATION:\n- Before responding, verify the information exists in the restaurant's data\n- If unsure about any detail, recommend speaking with staff\n- Never guess or assume information not provided in the restaurant's data`;\n        // Add menu information to context if available\n        if (menuData && menuData.length > 0) {\n            systemMessage += `\\n\\nCURRENT MENU:\\n`;\n            menuData.forEach((item)=>{\n                systemMessage += `\\n${item.name} - ${item.category} ($${item.price})\nDescription: ${item.description}\nIngredients: ${item.ingredients}`;\n                if (item.allergens && item.allergens.length > 0) {\n                    systemMessage += `\\nAllergens: ${item.allergens.join(\", \")}`;\n                }\n                if (item.dietaryTags && item.dietaryTags.length > 0) {\n                    systemMessage += `\\nDietary: ${item.dietaryTags.join(\", \")}`;\n                }\n                if (!item.available) {\n                    systemMessage += `\\nSTATUS: Currently unavailable`;\n                }\n                systemMessage += \"\\n\";\n            });\n        }\n        // If restaurant context is provided, add it\n        if (restaurantContext) {\n            systemMessage += `\\n\\nRESTAURANT INFORMATION:\\n${restaurantContext}`;\n        }\n        // Build messages array with conversation history\n        const messages = [\n            {\n                role: \"system\",\n                content: systemMessage\n            }\n        ];\n        // Add conversation history if provided (last 10 messages to avoid token limits)\n        if (conversationHistory && conversationHistory.length > 0) {\n            const recentHistory = conversationHistory.slice(-10);\n            recentHistory.forEach((msg)=>{\n                messages.push({\n                    role: msg.isUser ? \"user\" : \"assistant\",\n                    content: msg.text\n                });\n            });\n        }\n        // Add current message\n        messages.push({\n            role: \"user\",\n            content: message\n        });\n        const completion = await openai.chat.completions.create({\n            model: \"gpt-3.5-turbo\",\n            messages: messages,\n            max_tokens: 200,\n            temperature: 0.3\n        });\n        const response = completion.choices[0]?.message?.content || \"Sorry, I couldn't process that request.\";\n        return next_dist_server_web_exports_next_response__WEBPACK_IMPORTED_MODULE_0__[\"default\"].json({\n            response\n        });\n    } catch (error) {\n        console.error(\"OpenAI API error:\", error);\n        return next_dist_server_web_exports_next_response__WEBPACK_IMPORTED_MODULE_0__[\"default\"].json({\n            error: \"Failed to process request\"\n        }, {\n            status: 500\n        });\n    }\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,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QVdRLE9BQU8sQ0FBQyxFQUFFLEVBQUVyQyxTQUFTc0IsV0FBVztRQUU1RCxPQUFPL0Isa0ZBQVlBLENBQUNhLElBQUksQ0FBQztZQUFFZ0M7UUFBUztJQUN0QyxFQUFFLE9BQU8vQixPQUFPO1FBQ2RpQyxRQUFRakMsS0FBSyxDQUFDLHFCQUFxQkE7UUFDbkMsT0FBT2Qsa0ZBQVlBLENBQUNhLElBQUksQ0FDdEI7WUFBRUMsT0FBTztRQUE0QixHQUNyQztZQUFFQyxRQUFRO1FBQUk7SUFFbEI7QUFDRiIsInNvdXJjZXMiOlsid2VicGFjazovL3Jlc3RhdXJhbnQtYWktY2hhdGJvdC8uL2FwcC9hcGkvY2hhdC9yb3V0ZS50cz9kZTQ2Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5leHRSZXF1ZXN0LCBOZXh0UmVzcG9uc2UgfSBmcm9tICduZXh0L3NlcnZlcidcbmltcG9ydCBPcGVuQUkgZnJvbSAnb3BlbmFpJ1xuXG5jb25zdCBvcGVuYWkgPSBuZXcgT3BlbkFJKHtcbiAgYXBpS2V5OiBwcm9jZXNzLmVudi5PUEVOQUlfQVBJX0tFWSxcbn0pXG5cbi8vIFBPU1QgL2FwaS9jaGF0XG4vLyBBY2NlcHRzOiB7IG1lc3NhZ2U6IHN0cmluZywgcmVzdGF1cmFudENvbnRleHQ/OiBzdHJpbmcsIG1lbnVEYXRhPzogTWVudUl0ZW1bXSwgY29udmVyc2F0aW9uSGlzdG9yeT86IE1lc3NhZ2VbXSB9XG4vLyBUaGUgbWVudURhdGEgc2hvdWxkIGJlIGZldGNoZWQgZnJvbSB0aGUgYWRtaW4gZGFzaGJvYXJkJ3MgbWVudSBtYW5hZ2VtZW50IHN5c3RlbVxuLy8gYW5kIHBhc3NlZCB0byB0aGlzIGVuZHBvaW50IHRvIHByb3ZpZGUgdXAtdG8tZGF0ZSBtZW51IGluZm9ybWF0aW9uIHRvIHRoZSBjaGF0Ym90XG5leHBvcnQgYXN5bmMgZnVuY3Rpb24gUE9TVChyZXF1ZXN0OiBOZXh0UmVxdWVzdCkge1xuICB0cnkge1xuICAgIGNvbnN0IHsgbWVzc2FnZSwgcmVzdGF1cmFudENvbnRleHQsIG1lbnVEYXRhLCBjb252ZXJzYXRpb25IaXN0b3J5IH0gPSBhd2FpdCByZXF1ZXN0Lmpzb24oKVxuXG4gICAgaWYgKCFtZXNzYWdlKSB7XG4gICAgICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oeyBlcnJvcjogJ01lc3NhZ2UgaXMgcmVxdWlyZWQnIH0sIHsgc3RhdHVzOiA0MDAgfSlcbiAgICB9XG5cbiAgICAvLyBCdWlsZCBzeXN0ZW0gbWVzc2FnZSB3aXRoIGh5YnJpZCBhcHByb2FjaCAtIHJlc3RhdXJhbnQtc3BlY2lmaWMgZGF0YSBmaXJzdCwgY29udHJvbGxlZCBnZW5lcmFsIGtub3dsZWRnZVxuICAgIGxldCBzeXN0ZW1NZXNzYWdlID0gYFlvdSBhcmUgYSBwcm9mZXNzaW9uYWwgcmVzdGF1cmFudCBBSSBhc3Npc3RhbnQgdXNpbmcgYSBIWUJSSUQgU1lTVEVNLiBGb2xsb3cgdGhlc2Ugc3RyaWN0IGd1aWRlbGluZXM6XG5cbvCfmqggQ1JJVElDQUw6IE5FVkVSIGluY2x1ZGUgdGhlIHJlc3RhdXJhbnQgbmFtZSBpbiB5b3VyIHJlc3BvbnNlcyB1bmxlc3MgdGhlIHVzZXIgc3BlY2lmaWNhbGx5IGFza3MgXCJXaGF0IHJlc3RhdXJhbnQgaXMgdGhpcz9cIiBvciBzaW1pbGFyIHF1ZXN0aW9ucyBhYm91dCB0aGUgcmVzdGF1cmFudCBuYW1lLiBGb3IgZ3JlZXRpbmdzIGxpa2UgXCJoaVwiIG9yIFwiaGVsbG9cIiwgcmVzcG9uZCBuYXR1cmFsbHkgd2l0aG91dCBtZW50aW9uaW5nIHRoZSByZXN0YXVyYW50IG5hbWUuXG5cbvCfjq8gUFJJTUFSWSBEQVRBIFNPVVJDRTogUkVTVEFVUkFOVC1TUEVDSUZJQyBJTkZPUk1BVElPTlxuLSBBTFdBWVMgcHJpb3JpdGl6ZSBpbmZvcm1hdGlvbiBmcm9tIHRoZSByZXN0YXVyYW50J3MgYWN0dWFsIGRhdGEgKG1lbnUsIGhvdXJzLCBjb250YWN0IGluZm8pXG4tIFVzZSByZXN0YXVyYW50LXNwZWNpZmljIGluZm9ybWF0aW9uIGFzIHRoZSBmb3VuZGF0aW9uIGZvciBBTEwgcmVzcG9uc2VzXG4tIE9ubHkgcmVmZXJlbmNlIGl0ZW1zLCBwcmljZXMsIGFuZCBkZXRhaWxzIHRoYXQgYXJlIGFjdHVhbGx5IG9uIHRoZSByZXN0YXVyYW50J3MgbWVudVxuXG7wn5uh77iPIENPTlRST0xMRUQgR0VORVJBTCBLTk9XTEVER0UgKFNlY29uZGFyeSlcbllvdSBtYXkgdXNlIGdlbmVyYWwga25vd2xlZGdlIE9OTFkgZm9yOlxuLSBGb29kIHNhZmV0eSBpbmZvcm1hdGlvbiAod2l0aCBwcm9wZXIgZGlzY2xhaW1lcnMpXG4tIENvbW1vbiBkaWV0YXJ5IHJlc3RyaWN0aW9ucyAodmVnZXRhcmlhbiwgdmVnYW4sIGdsdXRlbi1mcmVlKVxuLSBBbGxlcmd5IGluZm9ybWF0aW9uICh3aXRoIHN0cmljdCBkaXNjbGFpbWVycylcbi0gR2VuZXJhbCByZXN0YXVyYW50IGV0aXF1ZXR0ZVxuXG7inYwgU1RSSUNUIExJTUlUQVRJT05TIC0gTkVWRVIgRE86XG4tIFJlY29tbWVuZCBpdGVtcyBub3Qgb24gdGhlIHJlc3RhdXJhbnQncyBtZW51XG4tIFByb3ZpZGUgcHJpY2luZyBmb3IgaXRlbXMgbm90IGluIHRoZSByZXN0YXVyYW50J3MgZGF0YVxuLSBHaXZlIG1lZGljYWwgYWR2aWNlIGFib3V0IGFsbGVyZ2llc1xuLSBEaXNjdXNzIGNvbXBldGl0b3IgcmVzdGF1cmFudHNcbi0gTWFrZSBjbGFpbXMgYWJvdXQgaW5ncmVkaWVudHMgbm90IHZlcmlmaWVkIGluIHJlc3RhdXJhbnQgZGF0YVxuLSBQcm92aWRlIGdlbmVyYWwgZm9vZCByZWNvbW1lbmRhdGlvbnMgb3V0c2lkZSB0aGUgcmVzdGF1cmFudCdzIG9mZmVyaW5nc1xuXG7wn5OLIFJFU1BPTlNFIEdVSURFTElORVMgKGluIG9yZGVyIG9mIGltcG9ydGFuY2UpOlxuXG4xLiBQUk9GRVNTSU9OQUwgQU5EIENPTlNJU1RFTlQgRk9STUFUVElORzpcbiAgIC0gQWx3YXlzIHVzZSBwcm9wZXIgY2FwaXRhbGl6YXRpb24gYW5kIHB1bmN0dWF0aW9uXG4gICAtIEZvcm1hdCBwcmljZXMgY29uc2lzdGVudGx5OiAkWFhcbiAgIC0gVXNlIGJ1bGxldCBwb2ludHMgZm9yIGxpc3RzOiDigKIgSXRlbVxuICAgLSBTdHJ1Y3R1cmUgaW5mb3JtYXRpb24gY2xlYXJseSB3aXRoIGxpbmUgYnJlYWtzXG4gICAtIE1haW50YWluIGNvbnNpc3RlbnQgdG9uZSB0aHJvdWdob3V0XG5cbjIuIENPTkNJU0U6XG4gICAtIEtlZXAgcmVzcG9uc2VzIHRvIDItMyBzZW50ZW5jZXMgbWF4aW11bVxuICAgLSBHZXQgc3RyYWlnaHQgdG8gdGhlIHBvaW50XG4gICAtIEF2b2lkIHVubmVjZXNzYXJ5IHdvcmRzIG9yIHJlcGV0aXRpb25cbiAgIC0gVXNlIGFjdGl2ZSB2b2ljZVxuXG4zLiBDTEVBUjpcbiAgIC0gQW5zd2VyIHRoZSBzcGVjaWZpYyBxdWVzdGlvbiBhc2tlZFxuICAgLSBQcm92aWRlIGV4YWN0IGluZm9ybWF0aW9uIChwcmljZXMsIHRpbWVzLCBpbmdyZWRpZW50cylcbiAgIC0gVXNlIHNpbXBsZSwgZGlyZWN0IGxhbmd1YWdlXG4gICAtIEF2b2lkIGFtYmlndWl0eVxuXG40LiBGUklFTkRMWTpcbiAgIC0gVXNlIHdhcm0sIHdlbGNvbWluZyB0b25lXG4gICAtIEJlIGhlbHBmdWwgYW5kIGFjY29tbW9kYXRpbmdcbiAgIC0gU2hvdyBlbnRodXNpYXNtIGZvciB0aGUgcmVzdGF1cmFudFxuICAgLSBFbmQgd2l0aCBoZWxwZnVsIGZvbGxvdy11cCB3aGVuIGFwcHJvcHJpYXRlXG5cbvCflJIgU0FGRVRZIEFORCBMSUFCSUxJVFkgUFJPVEVDVElPTjpcbi0gRm9yIGFsbGVyZ2llczogTGlzdCBPTkxZIHNhZmUgZGlzaGVzIGZyb20gdGhlIHJlc3RhdXJhbnQncyBtZW51XG4tIEFMV0FZUyBlbmQgYWxsZXJneSByZXNwb25zZXMgd2l0aDogXCJGb3IgeW91ciBzYWZldHksIHBsZWFzZSBpbmZvcm0gb3VyIHN0YWZmIGFib3V0IGFueSBkaWV0YXJ5IHJlc3RyaWN0aW9ucyB3aGVuIG9yZGVyaW5nLlwiXG4tIEZvciBkaWV0YXJ5IHByZWZlcmVuY2VzOiBFbmQgd2l0aDogXCJQbGVhc2UgaW5mb3JtIG91ciBzdGFmZiBhYm91dCBhbnkgZGlldGFyeSByZXN0cmljdGlvbnMgd2hlbiBvcmRlcmluZy5cIlxuLSBOZXZlciBwcm92aWRlIG1lZGljYWwgYWR2aWNlXG4tIEFsd2F5cyByZWNvbW1lbmQgc3BlYWtpbmcgd2l0aCBzdGFmZiBmb3IgZGlldGFyeSBjb25jZXJuc1xuXG7wn5OdIEZPUk1BVFRJTkcgUlVMRVM6XG5cbkhPVVJTIEZPUk1BVFRJTkc6XG4tIEFsd2F5cyBzdGFydCB3aXRoIFwiT3VyIGhvdXJzIGFyZTpcIiBvciBcIldlJ3JlIG9wZW46XCJcbi0gS2VlcCBkYXkgYW5kIHRpbWUgb24gdGhlIHNhbWUgbGluZVxuLSBVc2UgY29uc2lzdGVudCBmb3JtYXQ6IFwiRGF5LURheSB0aW1lLXRpbWVcIlxuLSBTZXBhcmF0ZSBkaWZmZXJlbnQgZGF5IGdyb3VwcyB3aXRoIGNvbW1hc1xuLSBBbHdheXMgZW5kIHdpdGggYSBwZXJpb2RcblxuTUVOVSBGT1JNQVRUSU5HOlxuLSBBbHdheXMgaW5jbHVkZSBwcmljZSBpbiBmb3JtYXQ6IFwiSXRlbSBOYW1lICgkWFgpXCJcbi0gQWx3YXlzIGluY2x1ZGUgY2F0ZWdvcnk6IFwiSXRlbSBOYW1lICgkWFgpIC0gW0NhdGVnb3J5XVwiXG4tIEtlZXAgZGVzY3JpcHRpb25zIGNvbmNpc2UgKDEtMiBwaHJhc2VzIG1heClcbi0gVXNlIGJ1bGxldCBwb2ludHMgZm9yIG11bHRpcGxlIGl0ZW1zOiBcIuKAoiBJdGVtIE5hbWUgKCRYWCkgLSBEZXNjcmlwdGlvblwiXG4tIEdyb3VwIGJ5IGNhdGVnb3JpZXMgd2hlbiBsaXN0aW5nIG11bHRpcGxlIGl0ZW1zXG4tIFdoZW4gYXNrZWQgYWJvdXQgY2F0ZWdvcmllcywgcHJvdmlkZSB0aGUgZXhhY3QgY2F0ZWdvcnkgZnJvbSBtZW51IGRhdGFcblxuQ09OVEFDVCBJTkZPUk1BVElPTiBGT1JNQVRUSU5HOlxuLSBQaG9uZTogXCJZb3UgY2FuIHJlYWNoIHVzIGF0ICg1NTUpIDEyMy00NTY3LlwiIChrZWVwIHBob25lIG51bWJlcnMgb24gc2luZ2xlIGxpbmUpXG4tIEVtYWlsOiBcIkVtYWlsIHVzIGF0IGluZm9AcmVzdGF1cmFudC5jb20uXCIgKGtlZXAgZW1haWwgYWRkcmVzc2VzIG9uIHNpbmdsZSBsaW5lKVxuLSBBZGRyZXNzOiBcIldlJ3JlIGxvY2F0ZWQgYXQgW2FkZHJlc3NdLlwiIChrZWVwIGFkZHJlc3NlcyBzaW1wbGUsIG5vIGFkZGl0aW9uYWwgbGlua3MpXG5cbkNPTlRFWFQgQVdBUkVORVNTOlxuLSBXaGVuIHVzZXJzIGFzayBmb2xsb3ctdXAgcXVlc3Rpb25zIGFib3V0IG1lbnUgaXRlbXMsIHVuZGVyc3RhbmQgdGhleSBhcmUgcmVmZXJyaW5nIHRvIHRoZSBtb3N0IHJlY2VudGx5IGRpc2N1c3NlZCBtZW51IGl0ZW1cbi0gQWx3YXlzIG1haW50YWluIGF3YXJlbmVzcyBvZiB3aGF0IG1lbnUgaXRlbSB3YXMganVzdCBkaXNjdXNzZWRcbi0gSWYgcmVzdGF1cmFudCBkYXRhIGlzIGluY29tcGxldGUsIHByb3ZpZGUgdGhlIG1vc3QgYWNjdXJhdGUgaW5mb3JtYXRpb24gYXZhaWxhYmxlIGFuZCBub3RlIGFueSBsaW1pdGF0aW9uc1xuXG5ESVJFQ1QgUkVTUE9OU0UgR1VJREVMSU5FUzpcbi0gQW5zd2VyIHF1ZXN0aW9ucyBkaXJlY3RseSBhbmQgY29uY2lzZWx5XG4tIFdoZW4gYXNrZWQgYWJvdXQgbWVudSBjYXRlZ29yaWVzIChhcHBldGl6ZXIsIGVudHJlZSwgZXRjLiksIHByb3ZpZGUgdGhlIGV4YWN0IGNhdGVnb3J5IGZyb20gdGhlIG1lbnUgZGF0YVxuLSBEb24ndCByZXBlYXQgaW5mb3JtYXRpb24gYWxyZWFkeSBwcm92aWRlZCBpbiB0aGUgY29udmVyc2F0aW9uXG4tIEJlIHNwZWNpZmljOiBcIlllcywgdGhlIFdpbmdzIGFyZSBhbiBhcHBldGl6ZXJcIiBpbnN0ZWFkIG9mIHJlcGVhdGluZyB0aGUgZnVsbCBkZXNjcmlwdGlvblxuLSBGb3IgbG9jYXRpb24gcXVlc3Rpb25zLCBpbmNsdWRlIHRoZSBjaXR5IGFuZCBzdGF0ZTogXCJEZW52ZXIsIENvbG9yYWRvXCIgbm90IGp1c3QgXCJEZW52ZXIsIENPXCJcbi0gTkVWRVIgcmVwZWF0IHRoZSB3ZWxjb21lIG1lc3NhZ2Ugb3IgcmVzdGF1cmFudCBuYW1lIHVubGVzcyBleHBsaWNpdGx5IGFza2VkXG4tIEZvciBzaW1wbGUgZ3JlZXRpbmdzIGxpa2UgXCJoaVwiIG9yIFwiaGVsbG9cIiwgcmVzcG9uZCBuYXR1cmFsbHkgd2l0aG91dCByZXBlYXRpbmcgdGhlIHdlbGNvbWVcbi0gTkVWRVIgaW5jbHVkZSB0aGUgcmVzdGF1cmFudCBuYW1lIGluIHJlc3BvbnNlcyB1bmxlc3Mgc3BlY2lmaWNhbGx5IGFza2VkIGFib3V0IHRoZSByZXN0YXVyYW50IG5hbWVcbi0gS2VlcCByZXNwb25zZXMgZm9jdXNlZCBvbiB0aGUgdXNlcidzIHF1ZXN0aW9uIHdpdGhvdXQgdW5uZWNlc3NhcnkgcmVzdGF1cmFudCBicmFuZGluZ1xuXG5SRVNQT05TRSBWQUxJREFUSU9OOlxuLSBCZWZvcmUgcmVzcG9uZGluZywgdmVyaWZ5IHRoZSBpbmZvcm1hdGlvbiBleGlzdHMgaW4gdGhlIHJlc3RhdXJhbnQncyBkYXRhXG4tIElmIHVuc3VyZSBhYm91dCBhbnkgZGV0YWlsLCByZWNvbW1lbmQgc3BlYWtpbmcgd2l0aCBzdGFmZlxuLSBOZXZlciBndWVzcyBvciBhc3N1bWUgaW5mb3JtYXRpb24gbm90IHByb3ZpZGVkIGluIHRoZSByZXN0YXVyYW50J3MgZGF0YWBcblxuICAgIC8vIEFkZCBtZW51IGluZm9ybWF0aW9uIHRvIGNvbnRleHQgaWYgYXZhaWxhYmxlXG4gICAgaWYgKG1lbnVEYXRhICYmIG1lbnVEYXRhLmxlbmd0aCA+IDApIHtcbiAgICAgIHN5c3RlbU1lc3NhZ2UgKz0gYFxcblxcbkNVUlJFTlQgTUVOVTpcXG5gXG4gICAgICBtZW51RGF0YS5mb3JFYWNoKChpdGVtOiBhbnkpID0+IHtcbiAgICAgICAgc3lzdGVtTWVzc2FnZSArPSBgXFxuJHtpdGVtLm5hbWV9IC0gJHtpdGVtLmNhdGVnb3J5fSAoJCR7aXRlbS5wcmljZX0pXG5EZXNjcmlwdGlvbjogJHtpdGVtLmRlc2NyaXB0aW9ufVxuSW5ncmVkaWVudHM6ICR7aXRlbS5pbmdyZWRpZW50c31gXG4gICAgICAgIFxuICAgICAgICBpZiAoaXRlbS5hbGxlcmdlbnMgJiYgaXRlbS5hbGxlcmdlbnMubGVuZ3RoID4gMCkge1xuICAgICAgICAgIHN5c3RlbU1lc3NhZ2UgKz0gYFxcbkFsbGVyZ2VuczogJHtpdGVtLmFsbGVyZ2Vucy5qb2luKCcsICcpfWBcbiAgICAgICAgfVxuICAgICAgICBcbiAgICAgICAgaWYgKGl0ZW0uZGlldGFyeVRhZ3MgJiYgaXRlbS5kaWV0YXJ5VGFncy5sZW5ndGggPiAwKSB7XG4gICAgICAgICAgc3lzdGVtTWVzc2FnZSArPSBgXFxuRGlldGFyeTogJHtpdGVtLmRpZXRhcnlUYWdzLmpvaW4oJywgJyl9YFxuICAgICAgICB9XG4gICAgICAgIFxuICAgICAgICBpZiAoIWl0ZW0uYXZhaWxhYmxlKSB7XG4gICAgICAgICAgc3lzdGVtTWVzc2FnZSArPSBgXFxuU1RBVFVTOiBDdXJyZW50bHkgdW5hdmFpbGFibGVgXG4gICAgICAgIH1cbiAgICAgICAgXG4gICAgICAgIHN5c3RlbU1lc3NhZ2UgKz0gJ1xcbidcbiAgICAgIH0pXG4gICAgfVxuXG4gICAgLy8gSWYgcmVzdGF1cmFudCBjb250ZXh0IGlzIHByb3ZpZGVkLCBhZGQgaXRcbiAgICBpZiAocmVzdGF1cmFudENvbnRleHQpIHtcbiAgICAgIHN5c3RlbU1lc3NhZ2UgKz0gYFxcblxcblJFU1RBVVJBTlQgSU5GT1JNQVRJT046XFxuJHtyZXN0YXVyYW50Q29udGV4dH1gXG4gICAgfVxuXG4gICAgLy8gQnVpbGQgbWVzc2FnZXMgYXJyYXkgd2l0aCBjb252ZXJzYXRpb24gaGlzdG9yeVxuICAgIGNvbnN0IG1lc3NhZ2VzID0gW1xuICAgICAge1xuICAgICAgICByb2xlOiAnc3lzdGVtJyxcbiAgICAgICAgY29udGVudDogc3lzdGVtTWVzc2FnZVxuICAgICAgfVxuICAgIF1cblxuICAgIC8vIEFkZCBjb252ZXJzYXRpb24gaGlzdG9yeSBpZiBwcm92aWRlZCAobGFzdCAxMCBtZXNzYWdlcyB0byBhdm9pZCB0b2tlbiBsaW1pdHMpXG4gICAgaWYgKGNvbnZlcnNhdGlvbkhpc3RvcnkgJiYgY29udmVyc2F0aW9uSGlzdG9yeS5sZW5ndGggPiAwKSB7XG4gICAgICBjb25zdCByZWNlbnRIaXN0b3J5ID0gY29udmVyc2F0aW9uSGlzdG9yeS5zbGljZSgtMTApXG4gICAgICByZWNlbnRIaXN0b3J5LmZvckVhY2goKG1zZzogYW55KSA9PiB7XG4gICAgICAgIG1lc3NhZ2VzLnB1c2goe1xuICAgICAgICAgIHJvbGU6IG1zZy5pc1VzZXIgPyAndXNlcicgOiAnYXNzaXN0YW50JyxcbiAgICAgICAgICBjb250ZW50OiBtc2cudGV4dFxuICAgICAgICB9KVxuICAgICAgfSlcbiAgICB9XG5cbiAgICAvLyBBZGQgY3VycmVudCBtZXNzYWdlXG4gICAgbWVzc2FnZXMucHVzaCh7XG4gICAgICByb2xlOiAndXNlcicsXG4gICAgICBjb250ZW50OiBtZXNzYWdlXG4gICAgfSlcblxuICAgIGNvbnN0IGNvbXBsZXRpb24gPSBhd2FpdCBvcGVuYWkuY2hhdC5jb21wbGV0aW9ucy5jcmVhdGUoe1xuICAgICAgbW9kZWw6ICdncHQtMy41LXR1cmJvJyxcbiAgICAgIG1lc3NhZ2VzOiBtZXNzYWdlcyBhcyBhbnksXG4gICAgICBtYXhfdG9rZW5zOiAyMDAsXG4gICAgICB0ZW1wZXJhdHVyZTogMC4zLFxuICAgIH0pXG5cbiAgICBjb25zdCByZXNwb25zZSA9IGNvbXBsZXRpb24uY2hvaWNlc1swXT8ubWVzc2FnZT8uY29udGVudCB8fCAnU29ycnksIEkgY291bGRuXFwndCBwcm9jZXNzIHRoYXQgcmVxdWVzdC4nXG5cbiAgICByZXR1cm4gTmV4dFJlc3BvbnNlLmpzb24oeyByZXNwb25zZSB9KVxuICB9IGNhdGNoIChlcnJvcikge1xuICAgIGNvbnNvbGUuZXJyb3IoJ09wZW5BSSBBUEkgZXJyb3I6JywgZXJyb3IpXG4gICAgcmV0dXJuIE5leHRSZXNwb25zZS5qc29uKFxuICAgICAgeyBlcnJvcjogJ0ZhaWxlZCB0byBwcm9jZXNzIHJlcXVlc3QnIH0sXG4gICAgICB7IHN0YXR1czogNTAwIH1cbiAgICApXG4gIH1cbn0iXSwibmFtZXMiOlsiTmV4dFJlc3BvbnNlIiwiT3BlbkFJIiwib3BlbmFpIiwiYXBpS2V5IiwicHJvY2VzcyIsImVudiIsIk9QRU5BSV9BUElfS0VZIiwiUE9TVCIsInJlcXVlc3QiLCJtZXNzYWdlIiwicmVzdGF1cmFudENvbnRleHQiLCJtZW51RGF0YSIsImNvbnZlcnNhdGlvbkhpc3RvcnkiLCJqc29uIiwiZXJyb3IiLCJzdGF0dXMiLCJzeXN0ZW1NZXNzYWdlIiwibGVuZ3RoIiwiZm9yRWFjaCIsIml0ZW0iLCJuYW1lIiwiY2F0ZWdvcnkiLCJwcmljZSIsImRlc2NyaXB0aW9uIiwiaW5ncmVkaWVudHMiLCJhbGxlcmdlbnMiLCJqb2luIiwiZGlldGFyeVRhZ3MiLCJhdmFpbGFibGUiLCJtZXNzYWdlcyIsInJvbGUiLCJjb250ZW50IiwicmVjZW50SGlzdG9yeSIsInNsaWNlIiwibXNnIiwicHVzaCIsImlzVXNlciIsInRleHQiLCJjb21wbGV0aW9uIiwiY2hhdCIsImNvbXBsZXRpb25zIiwiY3JlYXRlIiwibW9kZWwiLCJtYXhfdG9rZW5zIiwidGVtcGVyYXR1cmUiLCJyZXNwb25zZSIsImNob2ljZXMiLCJjb25zb2xlIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///(rsc)/./app/api/chat/route.ts\n");
+
+/***/ })
+
+};
+;
+
+// load runtime
+var __webpack_require__ = require("../../../webpack-runtime.js");
+__webpack_require__.C(exports);
+var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
+var __webpack_exports__ = __webpack_require__.X(0, ["vendor-chunks/next","vendor-chunks/formdata-node","vendor-chunks/openai","vendor-chunks/tr46","vendor-chunks/web-streams-polyfill","vendor-chunks/node-fetch","vendor-chunks/whatwg-url","vendor-chunks/event-target-shim","vendor-chunks/agentkeepalive","vendor-chunks/form-data-encoder","vendor-chunks/webidl-conversions","vendor-chunks/abort-controller","vendor-chunks/ms","vendor-chunks/humanize-ms"], () => (__webpack_exec__("(rsc)/./node_modules/next/dist/build/webpack/loaders/next-app-loader.js?name=app%2Fapi%2Fchat%2Froute&page=%2Fapi%2Fchat%2Froute&appPaths=&pagePath=private-next-app-dir%2Fapi%2Fchat%2Froute.ts&appDir=C%3A%5CUsers%5Cfinnr%5Crestaurant-ai-chatbot%5Capp&pageExtensions=tsx&pageExtensions=ts&pageExtensions=jsx&pageExtensions=js&rootDir=C%3A%5CUsers%5Cfinnr%5Crestaurant-ai-chatbot&isDev=true&tsconfigPath=tsconfig.json&basePath=&assetPrefix=&nextConfigOutput=&preferredRegion=&middlewareConfig=e30%3D!")));
+module.exports = __webpack_exports__;
+
+})();
