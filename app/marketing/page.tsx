@@ -359,15 +359,25 @@ export default function MarketingPage() {
                   const extraCustomers = totalWithBot - withoutBot;
                   const monthlyRevenue = extraCustomers * 18;
                   
-                  document.getElementById('monthlyVisitsDisplay').textContent = visits.toLocaleString();
-                  document.getElementById('monthlyVisitsDisplay2').textContent = visits.toLocaleString();
-                  document.getElementById('customersWithoutBot').textContent = customersWithoutBot % 1 === 0 ? customersWithoutBot.toFixed(0) : customersWithoutBot.toFixed(1);
-                  document.getElementById('customersWithBot').textContent = customersWithBot % 1 === 0 ? customersWithBot.toFixed(0) : customersWithBot.toFixed(1);
-                  document.getElementById('withoutBot').textContent = withoutBot % 1 === 0 ? withoutBot.toFixed(0) : withoutBot.toFixed(1);
-                  document.getElementById('withBot').textContent = totalWithBot % 1 === 0 ? totalWithBot.toFixed(0) : totalWithBot.toFixed(1);
-                  document.getElementById('extraCustomers').textContent = extraCustomers % 1 === 0 ? extraCustomers.toFixed(0) : extraCustomers.toFixed(1);
-                  document.getElementById('monthlyRevenue').textContent = `$${Math.round(monthlyRevenue).toLocaleString()}`;
-                  document.getElementById('monthlyRevenue2').textContent = `$${Math.round(monthlyRevenue).toLocaleString()}`;
+                  const monthlyVisitsDisplay = document.getElementById('monthlyVisitsDisplay');
+                  const monthlyVisitsDisplay2 = document.getElementById('monthlyVisitsDisplay2');
+                  const customersWithoutBotEl = document.getElementById('customersWithoutBot');
+                  const customersWithBotEl = document.getElementById('customersWithBot');
+                  const withoutBotEl = document.getElementById('withoutBot');
+                  const withBotEl = document.getElementById('withBot');
+                  const extraCustomersEl = document.getElementById('extraCustomers');
+                  const monthlyRevenueEl = document.getElementById('monthlyRevenue');
+                  const monthlyRevenue2El = document.getElementById('monthlyRevenue2');
+
+                  if (monthlyVisitsDisplay) monthlyVisitsDisplay.textContent = visits.toLocaleString();
+                  if (monthlyVisitsDisplay2) monthlyVisitsDisplay2.textContent = visits.toLocaleString();
+                  if (customersWithoutBotEl) customersWithoutBotEl.textContent = customersWithoutBot % 1 === 0 ? customersWithoutBot.toFixed(0) : customersWithoutBot.toFixed(1);
+                  if (customersWithBotEl) customersWithBotEl.textContent = customersWithBot % 1 === 0 ? customersWithBot.toFixed(0) : customersWithBot.toFixed(1);
+                  if (withoutBotEl) withoutBotEl.textContent = withoutBot % 1 === 0 ? withoutBot.toFixed(0) : withoutBot.toFixed(1);
+                  if (withBotEl) withBotEl.textContent = totalWithBot % 1 === 0 ? totalWithBot.toFixed(0) : totalWithBot.toFixed(1);
+                  if (extraCustomersEl) extraCustomersEl.textContent = extraCustomers % 1 === 0 ? extraCustomers.toFixed(0) : extraCustomers.toFixed(1);
+                  if (monthlyRevenueEl) monthlyRevenueEl.textContent = `$${Math.round(monthlyRevenue).toLocaleString()}`;
+                  if (monthlyRevenue2El) monthlyRevenue2El.textContent = `$${Math.round(monthlyRevenue).toLocaleString()}`;
                 }}
               />
             </div>

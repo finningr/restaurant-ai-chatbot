@@ -13,7 +13,7 @@ export default function DemoPage() {
     return urlPattern.test(url)
   }
 
-  const handleCreateCustomChatbot = () => {
+  const handleCreateCustomChatbot = async () => {
     if (!url.trim()) {
       setUrlError('Please enter a website URL')
       return
@@ -25,8 +25,69 @@ export default function DemoPage() {
     }
 
     setUrlError('')
-    // Navigate to onboarding with URL parameter
-    window.location.href = `/onboarding?url=${encodeURIComponent(url.trim())}&autoExtract=true`
+    
+    // Show loading state
+    const button = document.querySelector('[data-button="create-custom"]') as HTMLButtonElement
+    const originalText = button?.textContent
+    if (button) {
+      button.disabled = true
+      button.textContent = 'Scraping website...'
+    }
+
+    try {
+      // Call the comprehensive website scraping API
+      const response = await fetch('/api/scrape-website', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url.trim() })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to scrape website')
+      }
+
+      const result = await response.json()
+      
+      if (result.success && result.data) {
+        // Navigate to preview page with scraped data
+        const params = new URLSearchParams({
+          url: url.trim(),
+          name: result.data.restaurantName || '',
+          primaryColor: result.data.colors?.primary || '#4F46E5',
+          hours: result.data.hours || '',
+          menu: JSON.stringify(result.data.menuItems || []),
+          phone: result.data.phone || '',
+          email: result.data.email || '',
+          address: result.data.address || '',
+          description: result.data.description || '',
+          cuisine: result.data.cuisine || 'American'
+        })
+        
+        window.location.href = `/preview?${params.toString()}`
+      } else if (result.requiresManualInput) {
+        // Redirect to manual input form with extracted colors and original URL
+        const params = new URLSearchParams()
+        params.set('url', url.trim()) // Pass the original URL
+        if (result.brandColors) {
+          params.set('primaryColor', result.brandColors.primary)
+          params.set('secondaryColor', result.brandColors.secondary)
+          params.set('accentColor', result.brandColors.accent)
+        }
+        window.location.href = `/manual-input?${params.toString()}`
+      } else {
+        throw new Error(result.error || 'Failed to extract data')
+      }
+    } catch (error) {
+      console.error('Scraping error:', error)
+      // Redirect to manual input form instead of showing error
+      window.location.href = '/manual-input'
+    } finally {
+      // Reset button state
+      if (button) {
+        button.disabled = false
+        button.textContent = originalText
+      }
+    }
   }
 
   return (
@@ -86,18 +147,22 @@ export default function DemoPage() {
                 </div>
               <h2 className="text-3xl font-bold text-gray-900 mb-4">Create Custom Chatbot</h2>
               <p className="text-gray-600 text-lg leading-relaxed">
-                Enter your restaurant's website URL and our AI will automatically extract your restaurant's information and create a custom chatbot preview for you!
+                Enter your restaurant's website URL and our AI will extract your brand colors and try to get your restaurant information automatically. If automatic extraction doesn't work, you'll be redirected to a manual input form with your brand colors pre-loaded.
               </p>
           </div>
 
             <div className="space-y-5 mb-8">
               <div className="flex items-center text-gray-600">
                 <div className="w-2 h-2 bg-blue-500 rounded-full mr-4"></div>
+                <span className="text-sm font-medium">Automatic brand color extraction from your website</span>
+                </div>
+              <div className="flex items-center text-gray-600">
+                <div className="w-2 h-2 bg-blue-500 rounded-full mr-4"></div>
                 <span className="text-sm font-medium">Try asking about menu items, hours, and dietary options</span>
                 </div>
               <div className="flex items-center text-gray-600">
                 <div className="w-2 h-2 bg-blue-500 rounded-full mr-4"></div>
-                <span className="text-sm font-medium">Preview your chatbot on your actual website</span>
+                <span className="text-sm font-medium">Preview your chatbot with your brand colors</span>
               </div>
               <div className="flex items-center text-gray-600">
                 <div className="w-2 h-2 bg-blue-500 rounded-full mr-4"></div>
@@ -134,6 +199,7 @@ export default function DemoPage() {
         </div>
 
               <button
+                data-button="create-custom"
                 onClick={handleCreateCustomChatbot}
                 className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:from-blue-600 hover:to-indigo-700 transition-all flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
               >

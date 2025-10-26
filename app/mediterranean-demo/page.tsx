@@ -50,12 +50,18 @@ export default function MediterraneanDemoPage() {
 
   // Function to make contact info clickable
   const renderClickableText = (text: string) => {
+    // Check if text is undefined or null
+    if (!text) {
+      return ''
+    }
+    
     const phoneRegex = /(\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4})/g
     const emailRegex = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g
     // Address regex to detect street addresses
     const addressRegex = /(\d+\s+[A-Za-z\s]+(?:Street|St|Avenue|Ave|Road|Rd|Boulevard|Blvd|Way|Lane|Ln|Drive|Dr|Court|Ct|Place|Pl)\s*,\s*[A-Za-z\s]+,\s*[A-Z]{2}\s+\d{5})/g
     
     let result = text
+      .replace(/\n/g, '<br>') // Convert line breaks to HTML breaks
       .replace(phoneRegex, (match) => {
         const cleanPhone = match.replace(/[^\d]/g, '')
         return `<a href="tel:${cleanPhone}" class="text-blue-600 underline hover:text-blue-800">${match}</a>`
@@ -117,6 +123,48 @@ export default function MediterraneanDemoPage() {
       return
     }
 
+    // Handle special hours case
+    if (textToSend === "What are your hours?") {
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        text: "Hours",
+        isUser: true,
+        timestamp: new Date()
+      }
+
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "Our hours are:\n\nMonday-Thursday: 11am-10pm\nFriday-Saturday: 11am-11pm\nSunday: 12pm-9pm\n\nWe're open for lunch and dinner service. Is there anything else I can help you with?",
+        isUser: false,
+        timestamp: new Date()
+      }
+
+      setMessages(prev => [...prev, userMessage, aiMessage])
+      setInputMessage('')
+      return
+    }
+
+    // Handle special rating case
+    if (textToSend === "What's your rating?") {
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        text: "Rating",
+        isUser: true,
+        timestamp: new Date()
+      }
+
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        text: "We have an excellent 4.8/5 star rating with 247 reviews on Google Reviews! Our customers consistently praise our authentic Mediterranean flavors, fresh ingredients, and warm hospitality. We're proud to be one of Denver's top-rated Mediterranean restaurants. Is there anything else you'd like to know about our restaurant?",
+        isUser: false,
+        timestamp: new Date()
+      }
+
+      setMessages(prev => [...prev, userMessage, aiMessage])
+      setInputMessage('')
+      return
+    }
+
     const userMessage: Message = {
       id: Date.now().toString(),
       text: textToSend,
@@ -137,17 +185,62 @@ export default function MediterraneanDemoPage() {
         body: JSON.stringify({
           message: textToSend,
           conversationHistory: messages.slice(0, -1),
-          restaurantContext: `RESTAURANT: Azura Mediterranean Restaurant
+          restaurantContext: `You are a friendly, knowledgeable staff member at Azura Mediterranean Restaurant. Talk like a real person - be warm, helpful, and conversational. Use natural language, not menu descriptions.
+
+FUNDAMENTAL PRINCIPLE: Answer only the question asked. Do not repeat information from previous questions unless directly relevant to the current question.
+
+RESTAURANT: Azura Mediterranean Restaurant
+RATING: 4.8/5 stars (247 reviews on Google Reviews)
 HOURS: Monday-Thursday 11am-10pm, Friday-Saturday 11am-11pm, Sunday 12pm-9pm
 PHONE: (555) 123-4567
 EMAIL: info@azurarestaurant.com
 ADDRESS: 123 Mediterranean Way, Denver, CO 80202
 
+CORE BEHAVIOR GUIDELINES:
+- When asked about a specific dish, give a natural, conversational response about that dish only. Don't mention other dishes from previous questions.
+- Don't include any disclaimer about dietary restrictions when simply describing dishes.
+- Only use the dietary disclaimer when specifically asked about dietary restrictions, allergies, or dietary accommodations.
+- Answer only the specific question asked. Don't repeat information from previous questions.
+- Sound like a real person, not a robot reading a menu.
+- Each question is independent - don't reference or repeat information from previous questions unless directly relevant.
+- Always be honest about what you know and don't know. If you don't have information, say so.
+- When information is missing, provide helpful alternatives (e.g., "We don't use email for communication, but you can call us at [phone] or visit us at [address]").
+- Each response should be completely independent and only address the specific question asked.
+- Do not repeat information from previous questions unless directly relevant to the current question.
+
+FORMATTING REQUIREMENTS:
+- Always include the price when describing any dish (e.g., "The Veg Pakora ($6.99) is...")
+- Always include all dietary information from the menu (e.g., if menu says "GF/DF" then say "gluten-free and dairy-free")
+- Don't add dietary disclaimers when simply describing dishes
+- Use the exact dietary abbreviations from the menu (GF, DF, etc.)
+- If there's conflicting dietary info between title and description, use both - combine all dietary information mentioned anywhere
+
 MENU:
 APPETIZERS: Hummus Trio ($12), Falafel Platter ($14), Mediterranean Bruschetta ($10), Baba Ganoush ($11), Stuffed Grape Leaves ($9), Mediterranean Cheese Board ($16)
 MAIN COURSES: Lamb Kebab ($24), Chicken Shawarma ($18), Mediterranean Seafood Platter ($28), Beef Kofta ($20), Vegetarian Moussaka ($16), Grilled Salmon ($26)
 SALADS & SIDES: Greek Salad ($12), Mediterranean Quinoa Bowl ($14), Grilled Vegetable Platter ($13), Rice Pilaf ($6), Roasted Potatoes ($7), Pita Bread ($4)
-BEVERAGES: Mediterranean Sunset Cocktail ($12), Greek Ouzo Martini ($11), House Red Wine ($8), Greek White Wine ($9), Mediterranean Sangria ($10), Craft Beer ($6), Fresh Mint Tea ($4), Turkish Coffee ($5), Fresh Lemonade ($5), Mediterranean Iced Tea ($4), Fresh Orange Juice ($5), Sparkling Water ($3)`
+BEVERAGES: Mediterranean Sunset Cocktail ($12), Greek Ouzo Martini ($11), House Red Wine ($8), Greek White Wine ($9), Mediterranean Sangria ($10), Craft Beer ($6), Fresh Mint Tea ($4), Turkish Coffee ($5), Fresh Lemonade ($5), Mediterranean Iced Tea ($4), Fresh Orange Juice ($5), Sparkling Water ($3)
+
+DIETARY GUIDANCE:
+- For vegetarian/vegan: Recommend Falafel Platter, Vegetarian Moussaka, Greek Salad
+- For gluten-free: Recommend Grilled Salmon, Greek Salad, Grilled Vegetable Platter
+- For dairy-free: Recommend Falafel Platter, Grilled Salmon, Greek Salad (without feta)
+- For nut allergies: Recommend Lamb Kebab, Chicken Shawarma, Grilled Salmon
+- For seafood allergies: Avoid Mediterranean Seafood Platter, recommend Lamb Kebab, Chicken Shawarma
+
+IMPORTANT: When asked about a specific dietary restriction (like "nut allergies", "gluten-free", "dairy-free"), only recommend dishes that work for that specific restriction. Don't mix different dietary restrictions in the same response. Don't mention other dietary restrictions that were not asked about. If the user asks about "nut allergies", only mention nut-free dishes. If the user asks about "gluten-free", only mention gluten-free dishes. Only use the disclaimer exactly as written (including the line breaks): "\n\nPlease inform our staff about your dietary restrictions when ordering." when specifically asked about dietary restrictions, allergies, or dietary accommodations. Don't include this disclaimer when simply describing dishes or answering general menu questions.
+- CRITICAL DISCLAIMER RULE: The dietary disclaimer should ONLY appear when the user specifically asks about dietary restrictions, allergies, or dietary accommodations. It should NEVER appear when asked about unrelated topics like live music, events, hours, contact information, or general restaurant questions.
+
+When asked about a specific dish (like "tell me about the lamb kebab"), only describe that dish. Don't mention other dishes from previous questions. Don't include any disclaimer about dietary restrictions.
+
+Answer based only on the information provided above - don't make up information
+Don't mention any dishes that are not explicitly listed in the menu above
+If a dish is not in the menu, say "I don't see that item on our current menu" instead of making up information
+Only recommend dishes that are actually listed in the menu data provided
+Only answer the specific question asked. Don't mention other dishes unless specifically asked about them
+Don't repeat information from previous questions unless directly relevant
+Don't repeat the restaurant name in every response - only use it when necessary for clarity
+Be conversational and natural in your responses`
         }),
       })
 

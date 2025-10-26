@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Widget Test Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            line-height: 1.6;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <h1>Restaurant Chatbot Widget Test</h1>
+        <p>This page demonstrates how the restaurant chatbot widget will appear on a client's website.</p>
+        <p>The widget should appear as a floating chat button in the bottom-right corner. Click it to open the chat interface.</p>
+        <p>You can test the chatbot by asking questions like:</p>
+        <ul>
+            <li>"What are your hours?"</li>
+            <li>"Do you have vegetarian options?"</li>
+            <li>"What's your most popular dish?"</li>
+            <li>"Can I make a reservation?"</li>
+        </ul>
+    </div>
+
+    <!-- Widget Embed Script -->
+    <script 
+        src="http://localhost:3000/widget.js" 
+        data-widget-id="restaurant-1761464561662"
+        data-width="350"
+        data-height="600"
+        data-position="bottom-right"
+        data-auto-open="false">
+    </script>
+</body>
+</html>

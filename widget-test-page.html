@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Chatbot Widget Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 60px;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            padding: 8px 0;
+            color: #555;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        
+        .test-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .test-section p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .instructions h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin: 8px 0;
+            color: #555;
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 20px 15px;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ Restaurant Chatbot Widget Test</h1>
+            <p>This page demonstrates the restaurant chatbot widget embedded directly into a website. Look for the floating chat button in the bottom-right corner!</p>
+        </div>
+        
+        <div class="content-grid">
+            <div class="card">
+                <h2>🤖 AI-Powered Assistant</h2>
+                <p>Our chatbot uses advanced AI to provide instant, helpful responses about your restaurant's menu, hours, and services.</p>
+                <ul class="feature-list">
+                    <li>24/7 customer support</li>
+                    <li>Menu recommendations</li>
+                    <li>Dietary information</li>
+                    <li>Pricing details</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>📱 Mobile Responsive</h2>
+                <p>The widget automatically adapts to different screen sizes, providing an optimal experience on desktop, tablet, and mobile devices.</p>
+                <ul class="feature-list">
+                    <li>Responsive design</li>
+                    <li>Touch-friendly interface</li>
+                    <li>Fast loading times</li>
+                    <li>Cross-browser compatible</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>🎨 Brand Customization</h2>
+                <p>Each widget is customized with your restaurant's brand colors and styling to match your website's design perfectly.</p>
+                <ul class="feature-list">
+                    <li>Custom brand colors</li>
+                    <li>Restaurant-specific data</li>
+                    <li>Personalized responses</li>
+                    <li>Professional appearance</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h2>✨ Preview Matching UI</h2>
+                <p>The widget now perfectly matches the preview design with enhanced features and improved user experience.</p>
+                <ul class="feature-list">
+                    <li>"Powered by RestaurantAI" branding</li>
+                    <li>Working minimize button (X)</li>
+                    <li>Improved text visibility</li>
+                    <li>Clean header design (no status indicators)</li>
+                    <li>Modern Lucide icons (Bot, User, Send, X)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🧪 Widget Testing Instructions</h2>
+            <p>Follow these steps to test the chatbot widget functionality:</p>
+            
+            <div class="instructions">
+                <h3>How to Test the Widget:</h3>
+                <ol>
+                    <li><strong>Look for the chat button</strong> - You should see a blue floating button in the bottom-right corner</li>
+                    <li><strong>Click the button</strong> - This will open the chat widget</li>
+                    <li><strong>Try these test questions:</strong>
+                        <ul style="margin-top: 10px; text-align: left; max-width: 400px; margin-left: auto; margin-right: auto;">
+                            <li>"What's on your menu?"</li>
+                            <li>"What are your hours?"</li>
+                            <li>"Do you have vegetarian options?"</li>
+                            <li>"How much does the Chicken Tikka Masala cost?"</li>
+                            <li>"What's your most popular dish?"</li>
+                        </ul>
+                    </li>
+                    <li><strong>Test responsiveness</strong> - Try resizing your browser window or testing on mobile</li>
+                    <li><strong>Test closing/reopening</strong> - Click the button again to close and reopen the widget</li>
+                </ol>
+            </div>
+            
+            <div class="instructions">
+                <h3>Expected Results:</h3>
+                <ul style="text-align: left; max-width: 500px; margin: 0 auto;">
+                    <li>✅ Chat widget opens smoothly</li>
+                    <li>✅ AI responds with restaurant-specific information</li>
+                    <li>✅ Brand colors are applied correctly</li>
+                    <li>✅ Widget works on different screen sizes</li>
+                    <li>✅ Professional, polished appearance</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>This is a test page for the Restaurant AI Chatbot Widget System</p>
+            <p>Widget ID: restaurant-1761464561662 | Restaurant: Vintage Himalayan</p>
+        </div>
+    </div>
+
+    <!-- Restaurant Chatbot Widget Embed Script -->
+    <script 
+        id="restaurant-chatbot-widget-script"
+        src="http://localhost:3000/widget.js" 
+        data-widget-id="restaurant-1761464561662"
+        data-width="350"
+        data-height="600"
+        data-position="bottom-right"
+        data-auto-open="false">
+    </script>
+</body>
+</html>
