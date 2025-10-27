@@ -1,8 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase'
 
 export async function GET(request: NextRequest) {
   try {
+    // Check if Supabase environment variables are available
+    if (!process.env.SUPABASE_SERVICE_ROLE_KEY || !process.env.NEXT_PUBLIC_SUPABASE_URL) {
+      console.log('Supabase environment variables not available, returning mock data')
+      return NextResponse.json({
+        totalRestaurants: 0,
+        activeWidgets: 0,
+        totalMessages: 0,
+        popularCuisines: [],
+        widgetPerformance: [],
+        recentActivity: []
+      })
+    }
+
+    // Dynamically import supabaseAdmin to avoid build-time errors
+    const { supabaseAdmin } = await import('@/lib/supabase')
+    
     const { searchParams } = new URL(request.url)
     const range = searchParams.get('range') || '7d'
     

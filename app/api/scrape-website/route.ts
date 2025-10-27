@@ -133,7 +133,7 @@ function extractColorsFromHTML(html: string): string[] {
   }
   
   // Remove duplicates and filter out common non-brand colors
-  const uniqueColors = [...new Set(colors)]
+  const uniqueColors = Array.from(new Set(colors))
   const filteredColors = uniqueColors.filter(color => {
     const lowerColor = color.toLowerCase()
     // Filter out common non-brand colors

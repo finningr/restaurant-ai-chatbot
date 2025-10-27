@@ -136,7 +136,7 @@ If any field cannot be determined, use null.`
         const addressResponse = addressCompletion.choices[0]?.message?.content?.trim()
         
         // Strip markdown code blocks if present
-        let cleanResponse = addressResponse
+        let cleanResponse = addressResponse || ''
         if (cleanResponse.startsWith('```json')) {
           cleanResponse = cleanResponse.replace(/^```json\s*/, '').replace(/\s*```$/, '')
         } else if (cleanResponse.startsWith('```')) {
@@ -217,7 +217,7 @@ If a day is not mentioned, use null for that day.`
         })
 
         const hoursResponse = hoursCompletion.choices[0]?.message?.content?.trim()
-        const parsedHours = JSON.parse(hoursResponse)
+        const parsedHours = JSON.parse(hoursResponse || '{}')
         results.hours = parsedHours
       } catch (error) {
         console.error('Hours parsing error:', error)

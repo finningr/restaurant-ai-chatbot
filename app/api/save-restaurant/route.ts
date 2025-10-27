@@ -6,7 +6,7 @@ export async function POST(request: NextRequest) {
     const restaurantData = await request.json()
     
     // Process profitable dishes data first
-    let profitableDishesData = null
+    let profitableDishesData: { dish_ids: string[], dish_names: string[] } | null = null
     if (restaurantData.menuItems && restaurantData.menuItems.length > 0) {
       const profitableItems = restaurantData.menuItems.filter((item: any) => item.isProfitable)
       if (profitableItems.length > 0) {

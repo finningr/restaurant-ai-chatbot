@@ -232,9 +232,9 @@ export default function ManualInputPage() {
             const result = await addressResponse.json()
             addressData = result.formatted.address || {
               street: formData.address,
-              city: null,
-              state: null,
-              zip: null,
+              city: '',
+              state: '',
+              zip: '',
               country: 'USA'
             }
           }
@@ -242,9 +242,9 @@ export default function ManualInputPage() {
           console.error('Auto-address parsing failed:', error)
           addressData = {
             street: formData.address,
-            city: null,
-            state: null,
-            zip: null,
+            city: '',
+            state: '',
+            zip: '',
             country: 'USA'
           }
         }
@@ -361,7 +361,6 @@ export default function ManualInputPage() {
         menuItems={parsedMenuItems}
         onApprove={handleMenuReviewApprove}
         onCancel={handleMenuReviewCancel}
-        isSubmitting={isSubmitting}
       />
     )
   }
@@ -538,7 +537,7 @@ export default function ManualInputPage() {
                   <div className="text-sm text-green-700">
                     <strong>Hours:</strong>
                     {Object.entries(structuredData.hours).map(([day, hours]) => (
-                      <p key={day}>{day.charAt(0).toUpperCase() + day.slice(1)}: {hours}</p>
+                      <p key={day}>{day.charAt(0).toUpperCase() + day.slice(1)}: {String(hours)}</p>
                     ))}
                   </div>
                 )}

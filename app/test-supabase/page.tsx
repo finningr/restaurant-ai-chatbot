@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react'
 
 export default function TestSupabasePage() {
-  const [restaurantData, setRestaurantData] = useState(null)
+  const [restaurantData, setRestaurantData] = useState<any>(null)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
 
   const testConnection = async () => {
     setLoading(true)
@@ -22,7 +22,7 @@ export default function TestSupabasePage() {
       setRestaurantData(data)
       console.log('Restaurant data:', data)
     } catch (err) {
-      setError(err.message)
+      setError(err instanceof Error ? err.message : 'An error occurred')
       console.error('Error:', err)
     } finally {
       setLoading(false)
