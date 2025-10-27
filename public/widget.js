@@ -8,7 +8,7 @@
 
   // Configuration
   const WIDGET_CONFIG = {
-    baseUrl: 'http://localhost:3000', // Change to production URL when deployed
+    baseUrl: 'https://restaurant-ai-chatbot.vercel.app', // Production URL
     defaultWidth: 350,
     defaultHeight: 600,
     mobileWidth: '100vw',
