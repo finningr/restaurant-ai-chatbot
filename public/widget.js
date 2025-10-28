@@ -13,7 +13,9 @@
     defaultHeight: 600,
     mobileWidth: '100vw',
     mobileHeight: '100vh',
-    breakpoint: 768
+    breakpoint: 768,
+    desktopButtonSize: 60,
+    mobileButtonSize: 56
   };
 
   // Widget state
@@ -100,22 +102,34 @@
   function createWidgetContainer(width, height, position) {
     const container = document.createElement('div');
     container.id = 'restaurant-chatbot-widget';
+    
+    // Check if mobile
+    const isMobile = window.innerWidth <= WIDGET_CONFIG.breakpoint;
+    
     container.style.cssText = `
       position: fixed;
       ${position.includes('right') ? 'right: 20px;' : 'left: 20px;'}
       ${position.includes('bottom') ? 'bottom: 20px;' : 'top: 20px;'}
-      width: ${width}px;
-      height: ${height}px;
-      border-radius: 12px;
+      width: ${isMobile ? WIDGET_CONFIG.mobileWidth : width + 'px'};
+      height: ${isMobile ? WIDGET_CONFIG.mobileHeight : height + 'px'};
+      border-radius: ${isMobile ? '0' : '12px'};
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
       z-index: 999999;
-      transition: all 0.3s ease;
-      transform: scale(0);
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: ${isMobile ? 'translateY(100%)' : 'scale(0)'};
       opacity: 0;
       pointer-events: none;
+      ${isMobile ? `
+        right: 0 !important;
+        left: 0 !important;
+        bottom: 0 !important;
+        top: 0 !important;
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+      ` : ''}
     `;
 
-    // Responsive design
+    // Responsive design with better mobile handling
     const mediaQuery = `@media (max-width: ${WIDGET_CONFIG.breakpoint}px) {
       #restaurant-chatbot-widget {
         width: ${WIDGET_CONFIG.mobileWidth} !important;
@@ -125,6 +139,8 @@
         bottom: 0 !important;
         top: 0 !important;
         border-radius: 0 !important;
+        padding-top: env(safe-area-inset-top) !important;
+        padding-bottom: env(safe-area-inset-bottom) !important;
       }
     }`;
 
@@ -169,8 +185,13 @@
   function createToggleButton(position, colors) {
     const button = document.createElement('button');
     button.id = 'restaurant-chatbot-toggle';
+    
+    // Check if mobile for responsive sizing
+    const isMobile = window.innerWidth <= WIDGET_CONFIG.breakpoint;
+    const buttonSize = isMobile ? WIDGET_CONFIG.mobileButtonSize : WIDGET_CONFIG.desktopButtonSize;
+    
     button.innerHTML = `
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <svg width="${buttonSize * 0.4}" height="${buttonSize * 0.4}" viewBox="0 0 24 24" fill="none">
         <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M13 8H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M17 12H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -185,8 +206,8 @@
       position: fixed;
       ${position.includes('right') ? 'right: 20px;' : 'left: 20px;'}
       ${position.includes('bottom') ? 'bottom: 20px;' : 'top: 20px;'}
-      width: 60px;
-      height: 60px;
+      width: ${buttonSize}px;
+      height: ${buttonSize}px;
       border-radius: 50%;
       background: ${primaryColor};
       color: white;
@@ -194,22 +215,44 @@
       cursor: pointer;
       z-index: 999998;
       box-shadow: 0 4px 20px rgba(${shadowColor.r}, ${shadowColor.g}, ${shadowColor.b}, 0.4);
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       display: flex;
       align-items: center;
       justify-content: center;
+      ${isMobile ? `
+        right: 20px !important;
+        bottom: 20px !important;
+        margin-bottom: env(safe-area-inset-bottom);
+      ` : ''}
     `;
 
-    // Hover effects
-    button.addEventListener('mouseenter', () => {
-      button.style.transform = 'scale(1.1)';
-      button.style.boxShadow = `0 6px 25px rgba(${shadowColor.r}, ${shadowColor.g}, ${shadowColor.b}, 0.6)`;
-    });
+    // Add responsive styles for button
+    const buttonMediaQuery = `@media (max-width: ${WIDGET_CONFIG.breakpoint}px) {
+      #restaurant-chatbot-toggle {
+        width: ${WIDGET_CONFIG.mobileButtonSize}px !important;
+        height: ${WIDGET_CONFIG.mobileButtonSize}px !important;
+        right: 20px !important;
+        bottom: 20px !important;
+        margin-bottom: env(safe-area-inset-bottom) !important;
+      }
+    }`;
 
-    button.addEventListener('mouseleave', () => {
-      button.style.transform = 'scale(1)';
-      button.style.boxShadow = `0 4px 20px rgba(${shadowColor.r}, ${shadowColor.g}, ${shadowColor.b}, 0.4)`;
-    });
+    const buttonStyle = document.createElement('style');
+    buttonStyle.textContent = buttonMediaQuery;
+    document.head.appendChild(buttonStyle);
+
+    // Hover effects (desktop only)
+    if (!isMobile) {
+      button.addEventListener('mouseenter', () => {
+        button.style.transform = 'scale(1.1)';
+        button.style.boxShadow = `0 6px 25px rgba(${shadowColor.r}, ${shadowColor.g}, ${shadowColor.b}, 0.6)`;
+      });
+
+      button.addEventListener('mouseleave', () => {
+        button.style.transform = 'scale(1)';
+        button.style.boxShadow = `0 4px 20px rgba(${shadowColor.r}, ${shadowColor.g}, ${shadowColor.b}, 0.4)`;
+      });
+    }
 
     return button;
   }
@@ -274,9 +317,20 @@
   function showWidget() {
     if (!widgetInstance) return;
 
-    widgetInstance.container.style.transform = 'scale(1)';
-    widgetInstance.container.style.opacity = '1';
-    widgetInstance.container.style.pointerEvents = 'auto';
+    const isMobile = window.innerWidth <= WIDGET_CONFIG.breakpoint;
+    
+    if (isMobile) {
+      // Mobile: Slide up from bottom with iOS-like animation
+      widgetInstance.container.style.transform = 'translateY(0)';
+      widgetInstance.container.style.opacity = '1';
+      widgetInstance.container.style.pointerEvents = 'auto';
+    } else {
+      // Desktop: Scale animation
+      widgetInstance.container.style.transform = 'scale(1)';
+      widgetInstance.container.style.opacity = '1';
+      widgetInstance.container.style.pointerEvents = 'auto';
+    }
+    
     widgetInstance.toggleButton.style.display = 'none';
     widgetInstance.isOpen = true;
 
@@ -292,9 +346,20 @@
   function hideWidget() {
     if (!widgetInstance) return;
 
-    widgetInstance.container.style.transform = 'scale(0)';
-    widgetInstance.container.style.opacity = '0';
-    widgetInstance.container.style.pointerEvents = 'none';
+    const isMobile = window.innerWidth <= WIDGET_CONFIG.breakpoint;
+    
+    if (isMobile) {
+      // Mobile: Slide down animation
+      widgetInstance.container.style.transform = 'translateY(100%)';
+      widgetInstance.container.style.opacity = '0';
+      widgetInstance.container.style.pointerEvents = 'none';
+    } else {
+      // Desktop: Scale animation
+      widgetInstance.container.style.transform = 'scale(0)';
+      widgetInstance.container.style.opacity = '0';
+      widgetInstance.container.style.pointerEvents = 'none';
+    }
+    
     widgetInstance.toggleButton.style.display = 'flex';
     widgetInstance.isOpen = false;
   }
