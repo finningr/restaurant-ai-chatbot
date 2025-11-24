@@ -3,6 +3,15 @@ import { NextRequest, NextResponse } from 'next/server'
 // Force dynamic rendering - this route uses request.url
 export const dynamic = 'force-dynamic'
 
+interface Restaurant {
+  id: string
+  name: string
+  widget_id: string
+  cuisine: string | null
+  is_active: boolean | null
+  created_at: string | null
+}
+
 export async function GET(request: NextRequest) {
   try {
     // Check if Supabase environment variables are available
@@ -75,10 +84,10 @@ export async function GET(request: NextRequest) {
     }
 
     // Get active widgets count
-    const activeWidgets = restaurants?.filter(r => r.is_active).length || 0
+    const activeWidgets = restaurants?.filter((r: Restaurant) => r.is_active).length || 0
 
     // Get popular cuisines
-    const cuisineCounts = restaurants?.reduce((acc, restaurant) => {
+    const cuisineCounts = restaurants?.reduce((acc: Record<string, number>, restaurant: Restaurant) => {
       const cuisine = restaurant.cuisine || 'Unknown'
       acc[cuisine] = (acc[cuisine] || 0) + 1
       return acc
@@ -90,7 +99,7 @@ export async function GET(request: NextRequest) {
       .slice(0, 5)
 
     // Get widget performance (mock data for now - would need chat logs table)
-    const widgetPerformance = restaurants?.map(restaurant => ({
+    const widgetPerformance = restaurants?.map((restaurant: Restaurant) => ({
       widget_id: restaurant.widget_id,
       name: restaurant.name,
       messages: Math.floor(Math.random() * 100), // Mock data
@@ -119,7 +128,7 @@ export async function GET(request: NextRequest) {
     const analyticsData = {
       totalRestaurants: restaurants?.length || 0,
       activeWidgets,
-      totalMessages: widgetPerformance.reduce((sum, widget) => sum + widget.messages, 0),
+      totalMessages: widgetPerformance.reduce((sum: number, widget: { messages: number }) => sum + widget.messages, 0),
       popularCuisines,
       widgetPerformance,
       recentActivity
