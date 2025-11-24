@@ -93,18 +93,33 @@ export async function GET(request: NextRequest) {
       return acc
     }, {} as Record<string, number>)
 
-    const popularCuisines = Object.entries(cuisineCounts || {})
-      .map(([cuisine, count]) => ({ cuisine, count }))
-      .sort((a, b) => b.count - a.count)
+    interface CuisineCount {
+      cuisine: string
+      count: number
+    }
+
+    const popularCuisines: CuisineCount[] = Object.entries(cuisineCounts || {})
+      .map(([cuisine, count]: [string, unknown]): CuisineCount => ({ 
+        cuisine, 
+        count: typeof count === 'number' ? count : 0 
+      }))
+      .sort((a: CuisineCount, b: CuisineCount) => b.count - a.count)
       .slice(0, 5)
 
+    interface WidgetPerformance {
+      widget_id: string
+      name: string
+      messages: number
+      active: boolean | null
+    }
+
     // Get widget performance (mock data for now - would need chat logs table)
-    const widgetPerformance = restaurants?.map((restaurant: Restaurant) => ({
+    const widgetPerformance: WidgetPerformance[] = restaurants?.map((restaurant: Restaurant): WidgetPerformance => ({
       widget_id: restaurant.widget_id,
       name: restaurant.name,
       messages: Math.floor(Math.random() * 100), // Mock data
       active: restaurant.is_active
-    })).sort((a, b) => b.messages - a.messages) || []
+    })).sort((a: WidgetPerformance, b: WidgetPerformance) => b.messages - a.messages) || []
 
     // Get recent activity (mock data for now)
     const recentActivity = [
