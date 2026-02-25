@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mario's Italian Bistro - Test Client Website</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            margin: 0.5rem 0 0 0;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .hero-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .hero-section h2 {
+            color: #8B4513;
+            margin-bottom: 1rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .feature-card h3 {
+            color: #8B4513;
+            margin-bottom: 1rem;
+        }
+        
+        .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .test-notice {
+            background: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .test-notice h3 {
+            color: #1976d2;
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🍝 Mario's Italian Bistro</h1>
+        <p>Authentic Italian Cuisine Since 1985</p>
+    </div>
+
+    <div class="container">
+        <div class="test-notice">
+            <h3>🧪 Chatbot Widget Test Page</h3>
+            <p><strong>This is a simulated client website to test the restaurant chatbot widget.</strong></p>
+            <p>Look for the chat button in the bottom-right corner and test the AI assistant!</p>
+        </div>
+
+        <div class="hero-section">
+            <h2>Welcome to Mario's Italian Bistro</h2>
+            <p>Experience the authentic flavors of Italy in the heart of downtown. Our family recipes have been passed down through generations, bringing you the true taste of Italian cuisine.</p>
+            <p>From our handmade pasta to our wood-fired pizzas, every dish is crafted with love and the finest ingredients.</p>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>🍕 Wood-Fired Pizza</h3>
+                <p>Hand-tossed dough cooked in our traditional wood-fired oven for that perfect crispy crust and smoky flavor.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🍝 Fresh Pasta</h3>
+                <p>Made daily in-house using traditional Italian techniques and the finest semolina flour.</p>
+            </div>
+            
+            <div class="feature-card">
+                <h3>🍷 Wine Selection</h3>
+                <p>Curated collection of Italian wines to perfectly complement your dining experience.</p>
+            </div>
+        </div>
+
+        <div class="hero-section">
+            <h2>Visit Us Today</h2>
+            <p><strong>Address:</strong> 123 Main Street, Downtown</p>
+            <p><strong>Phone:</strong> (555) 123-4567</p>
+            <p><strong>Hours:</strong> Mon-Thu 11AM-10PM, Fri-Sat 11AM-11PM, Sun 12PM-9PM</p>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Mario's Italian Bistro. All rights reserved.</p>
+        <p><em>This is a test website for chatbot widget demonstration purposes.</em></p>
+    </div>
+
+    <!-- Restaurant AI Chatbot Widget - This is what clients will embed -->
+    <script src="https://restaurant-ai-chatbot.vercel.app/widget.js?v=22" data-widget-id="restaurant-1761464561662" data-width="350" data-height="600" data-position="bottom-right" data-auto-open="false">
+    </script>
+</body>
+</html>

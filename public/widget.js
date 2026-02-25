@@ -173,7 +173,7 @@
     `;
     
     // Security attributes
-    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms');
+    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox');
     iframe.setAttribute('loading', 'lazy');
     
     return iframe;

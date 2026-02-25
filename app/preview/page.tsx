@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Bot, User, Send, X, ChevronRight, ArrowLeft, MessageCircle } from 'lucide-react'
 import Link from 'next/link'
@@ -12,7 +12,7 @@ interface Message {
   timestamp: Date
 }
 
-export default function PreviewPage() {
+function PreviewPageContent() {
   const searchParams = useSearchParams()
   
   // Try to get data from localStorage first, fallback to URL params
@@ -22,7 +22,7 @@ export default function PreviewPage() {
     if (typeof window !== 'undefined') {
       // Get URL-specific data from localStorage
       const urlParams = new URLSearchParams(window.location.search)
-      const originalUrl = urlParams.get('url') || 'https://example.com'
+      const originalUrl = urlParams.get('url') || 'https://www.vintagehimalayan.com/Home'
       const urlKey = `restaurantData_${originalUrl}`
       console.log('Looking for localStorage key:', urlKey)
       const storedData = localStorage.getItem(urlKey)
@@ -307,10 +307,12 @@ export default function PreviewPage() {
         dietaryList = restrictions.join(', ')
       }
 
-      // Build special services list
+      // Build special services list (handle both array and comma-separated string)
       let servicesList = ''
       if (specialServices) {
-        const services = specialServices.split(',').filter((s: string) => s.trim())
+        const services = Array.isArray(specialServices)
+          ? specialServices.filter(Boolean)
+          : String(specialServices).split(',').filter((s: string) => s.trim())
         if (specialServicesOther) {
           services.push(specialServicesOther)
         }
@@ -383,10 +385,12 @@ ${paymentList ? `- Payment Methods Accepted: ${paymentList}` : ''}
             - When asked "what's your phone number", respond with "You can reach us at ${phone || 'please check our website for contact information'}"
 - For hours: When asked about hours, include all hour-related information available. If the hours data contains both business hours and carryout hours, format the response as:
   "Our hours are:
-  - [business hours with bullet points]
+  • [business hours with bullet points]
   
   For carryout:
-  - [carryout hours with bullet points]"
+  • [carryout hours with bullet points]"
+  
+  ALWAYS use bullet points (•) for list items - NEVER use dashes (-) for bullet points. Only use dashes (-) for time ranges (e.g., "11:00 AM - 10:00 PM").
 - For dietary accommodations: When asked "what dietary accommodations do you have" or similar, respond with exactly what is listed in "Dietary Restrictions Accommodated" above. Don't make up or guess dietary options.
 - For dietary restrictions: When asked about a specific dietary restriction (like "nut allergies", "gluten-free", "dairy-free"), only recommend dishes that work for that specific restriction. Don't mix different dietary restrictions in the same response. Don't mention other dietary restrictions that were not asked about. If the user asks about "nut allergies", only mention nut-free dishes. If the user asks about "gluten-free", only mention gluten-free dishes. First recommend specific dishes that work for their needs, then end with exactly this text (including the line breaks): "\n\nPlease inform our staff about your dietary restrictions when ordering." Only use this disclaimer when specifically asked about dietary restrictions, allergies, or dietary accommodations. Don't include this disclaimer when simply describing dishes or answering general menu questions.
 - CRITICAL DISCLAIMER RULE: The dietary disclaimer should ONLY appear when the user specifically asks about dietary restrictions, allergies, or dietary accommodations. It should NEVER appear when asked about unrelated topics like live music, events, hours, contact information, or general restaurant questions.
@@ -697,5 +701,20 @@ ${paymentList ? `- Payment Methods Accepted: ${paymentList}` : ''}
 
       </div>
     </div>
+  )
+}
+
+export default function PreviewPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-primary-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <PreviewPageContent />
+    </Suspense>
   )
 }

@@ -1,9 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
 import { supabaseAdmin } from '@/lib/supabase'
+import { logActivity, getClientIP, getUserAgent } from '@/lib/activity-logger'
+
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
   try {
     const restaurantData = await request.json()
+    
+    // Get owner email - prioritize restaurantData.ownerEmail, then session, then null
+    const session = await getServerSession(authOptions)
+    const ownerEmail = restaurantData.ownerEmail || session?.user?.email || null
+    
+    // Get sales rep email if this is being created by a sales rep
+    // Check if sales_rep flag is in the request or if user is a sales rep
+    const userRole = (session?.user as any)?.role
+    const salesRepEmail = (userRole === 'sales_rep' && !ownerEmail) ? session?.user?.email : null
+    const createdBy = (userRole === 'sales_rep' || userRole === 'admin') ? session?.user?.email : null
+    
+    // Determine if this is onboarded (has owner_email) or just a demo
+    const isOnboarded = !!ownerEmail
+    // Demos are inactive by default, only active when onboarded
+    const isActive = isOnboarded
     
     // Process profitable dishes data first
     let profitableDishesData: { dish_ids: string[], dish_names: string[] } | null = null
@@ -38,7 +58,16 @@ export async function POST(request: NextRequest) {
         website_url: restaurantData.websiteUrl,
         widget_id: restaurantData.widgetId || `restaurant-${Date.now()}`,
         raw_menu_text: restaurantData.rawMenuText,
-        profitable_dishes: profitableDishesData
+        profitable_dishes: profitableDishesData,
+        delivery_links: restaurantData.deliveryLinks || {},
+        reservation_link: restaurantData.reservationLink || null,
+        catering_link: restaurantData.cateringLink || null,
+        special_services: restaurantData.specialServices || [],
+        owner_email: ownerEmail,
+        sales_rep_email: salesRepEmail,
+        created_by: createdBy,
+        is_onboarded: isOnboarded,
+        is_active: isActive
       })
       .select()
       .single()
@@ -56,7 +85,8 @@ export async function POST(request: NextRequest) {
         price: item.price,
         category: item.category,
         description: item.description,
-        dietary_tags: item.dietaryTags || []
+        dietary_tags: item.dietaryTags || [],
+        menu_type: item.menuType || null
       }))
 
       const { data: insertedMenuItems, error: menuError } = await supabaseAdmin
@@ -104,6 +134,26 @@ export async function POST(request: NextRequest) {
     if (settingsError) {
       console.error('Chatbot settings insert error:', settingsError)
       // Don't fail the whole request if settings fail
+    }
+
+    // Log activity
+    if (session?.user?.email) {
+      const userRole = (session.user as any)?.role || 'restaurant'
+      const actionType = isOnboarded ? 'create_restaurant' : 'create_demo'
+      
+      await logActivity({
+        user_email: session.user.email,
+        user_role: userRole,
+        action_type: actionType,
+        restaurant_id: restaurant.id,
+        restaurant_name: restaurant.name,
+        details: {
+          menu_items_count: restaurantData.menuItems?.length || 0,
+          is_onboarded: isOnboarded
+        },
+        ip_address: getClientIP(request),
+        user_agent: getUserAgent(request)
+      })
     }
 
     return NextResponse.json({ 

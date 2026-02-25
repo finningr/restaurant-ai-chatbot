@@ -1,17 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { signIn } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { Bot, Home } from 'lucide-react'
 import Link from 'next/link'
 
 export default function LoginPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if (searchParams.get('message') === 'account-created') {
+      setSuccessMessage('Account created! Please log in with your email and password.')
+    }
+  }, [searchParams])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,22 +39,25 @@ export default function LoginPage() {
 
       if (result?.error) {
         console.error('Login error:', result.error)
-        setError('Invalid email or password')
+        setError(result.error === 'CredentialsSignin' ? 'Invalid email or password' : result.error)
         setIsLoading(false)
         return
       }
 
       if (result?.ok) {
         console.log('Login successful, redirecting...')
-        // Redirect to dashboard after successful login
-        window.location.href = '/dashboard'
+        // Small delay to ensure session is set
+        await new Promise(resolve => setTimeout(resolve, 100))
+        // Use router.push for proper Next.js navigation
+        router.push('/dashboard')
+        router.refresh() // Refresh to get updated session
       } else {
-        setError('Login failed. Please try again.')
+        setError(result?.error || 'Login failed. Please try again.')
         setIsLoading(false)
       }
     } catch (error) {
       console.error('Login exception:', error)
-      setError('An error occurred. Please try again.')
+      setError(error instanceof Error ? error.message : 'An error occurred. Please try again.')
       setIsLoading(false)
     }
   }
@@ -103,13 +114,18 @@ export default function LoginPage() {
               <p className="text-gray-600">Sign in to your account</p>
             </div>
 
+            {successMessage && (
+              <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6">
+                {successMessage}
+              </div>
+            )}
             {error && (
               <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
                 {error}
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} method="post" className="space-y-6">
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email Address
@@ -121,7 +137,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 bg-white"
                   placeholder="Enter your email"
                 />
               </div>
@@ -137,7 +153,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 bg-white"
                   placeholder="Enter your password"
                 />
               </div>

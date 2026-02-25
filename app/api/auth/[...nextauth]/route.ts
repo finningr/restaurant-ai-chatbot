@@ -72,6 +72,13 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
+        // Check if user is paused or deleted
+        const userStatus = user.status || 'active'
+        if (userStatus === 'paused' || userStatus === 'deleted') {
+          console.log(`Login blocked: User is ${userStatus}`)
+          return null
+        }
+
         console.log('Checking password...')
         const isPasswordValid = await bcrypt.compare(credentials.password, user.password)
         
@@ -82,11 +89,12 @@ export const authOptions: NextAuthOptions = {
 
         console.log('Login successful!')
         
-        // Return minimal user object
+        // Return user object with role
         return {
           id: user.id,
           email: user.email,
           name: user.name,
+          role: user.role || 'restaurant', // Include role in user object
         }
       }
     })
@@ -97,7 +105,24 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      // Add role to token when user signs in
+      if (user) {
+        token.role = (user as any).role
+      }
+      return token
+    },
+    async session({ session, token }) {
+      // Add role to session
+      if (session.user) {
+        (session.user as any).role = token.role
+      }
+      return session
+    },
+  },
   secret: process.env.NEXTAUTH_SECRET || 'dev-secret-key-123',
+  debug: process.env.NODE_ENV === 'development',
 }
 
 // Export functions for signup

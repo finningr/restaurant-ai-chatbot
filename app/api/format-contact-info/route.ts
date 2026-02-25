@@ -5,11 +5,47 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 })
 
+// Hours structure: main (required for schedule), optional kitchen, pickup, happy_hour, holiday, brunch, bar
+type HoursStructure = {
+  main?: Record<string, string>
+  kitchen?: Record<string, string>
+  pickup?: Record<string, string>
+  happy_hour?: string
+  holiday?: string
+  brunch?: string
+  bar?: string
+}
+
+function parseDayHoursWithAI(openai: OpenAI, text: string): Promise<Record<string, string>> {
+  return openai.chat.completions.create({
+    model: "gpt-4o",
+    messages: [
+      {
+        role: "system",
+        content: `You are a business hours parser. Take any hours format and convert it to structured JSON.
+Return a JSON object with days of the week as keys and hours as values.
+Days: monday, tuesday, wednesday, thursday, friday, saturday, sunday
+Examples: "Mon-Fri 9am-10pm" → {"monday":"9am-10pm","tuesday":"9am-10pm",...}
+If a day is not mentioned, use null. Use "Closed" for closed days.`
+      },
+      { role: "user", content: text }
+    ],
+    temperature: 0.1,
+    max_completion_tokens: 300,
+  }).then(async (res) => {
+    const raw = res.choices[0]?.message?.content?.trim() || '{}'
+    const clean = raw.replace(/^```json\s*/, '').replace(/\s*```$/, '').replace(/^```\s*/, '')
+    const parsed = JSON.parse(clean || '{}')
+    return typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed) ? parsed : {}
+  }).catch(() => ({}))
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { phone, email, address, hours } = await request.json()
+    const { phone, email, address, hours, hoursMain, hoursKitchen, hoursPickup, hoursHappyHour, hoursHoliday, hoursBrunch, hoursBar } = await request.json()
+    const hasHours = hours || hoursMain || hoursKitchen || hoursPickup || hoursHappyHour || hoursHoliday || hoursBrunch || hoursBar
 
-    if (!phone && !email && !address && !hours) {
+    if (!phone && !email && !address && !hasHours) {
       return NextResponse.json({ error: 'At least one field is required' }, { status: 400 })
     }
 
@@ -23,21 +59,20 @@ export async function POST(request: NextRequest) {
           messages: [
             {
               role: "system",
-              content: `You are a phone number formatter. Take any phone number format and convert it to a standardized format.
+              content: `You are a phone number formatter. Take any phone number format and convert it to a standardized US format.
 
 Rules:
-- Always include country code if missing (assume US +1 if not specified)
-- Format as: +1-XXX-XXX-XXXX for US numbers
-- For international numbers, use appropriate country code
-- Remove any extra characters like parentheses, spaces, dots, etc.
+- Assume all numbers are US numbers (do NOT add country code +1)
+- Format as: (XXX) XXX-XXXX for US numbers
+- Remove any extra characters like dots, but keep parentheses and dashes in standard format
 - If the number is clearly incomplete or invalid, return null
 
 Examples:
-- "(303) 376-9954" → "+1-303-376-9954"
-- "303.376.9954" → "+1-303-376-9954"
-- "303-376-9954" → "+1-303-376-9954"
-- "3033769954" → "+1-303-376-9954"
-- "+44 20 7946 0958" → "+44-20-7946-0958"
+- "(303) 376-9954" → "(303) 376-9954"
+- "303.376.9954" → "(303) 376-9954"
+- "303-376-9954" → "(303) 376-9954"
+- "3033769954" → "(303) 376-9954"
+- "+1-303-376-9954" → "(303) 376-9954"
 - "invalid" → null`
             },
             {
@@ -157,79 +192,84 @@ If any field cannot be determined, use null.`
       }
     }
 
-    // Parse hours into structured JSON
-    if (hours) {
+    // Parse hours into multi-type structure
+    if (hasHours) {
+      const hoursResult: HoursStructure = {}
+
       try {
-        const hoursCompletion = await openai.chat.completions.create({
-          model: "gpt-4o",
-          messages: [
-            {
-              role: "system",
-              content: `You are a business hours parser. Take any hours format and convert it to structured JSON.
+        // Case 1: Single blob (legacy) - parse into full structure
+        if (hours && typeof hours === 'string' && !hoursMain && !hoursPickup) {
+          const blobCompletion = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: [
+              {
+                role: "system",
+                content: `You parse restaurant hours text into a structured JSON object. Extract main hours, and any of: kitchen, pickup/takeout, happy hour, holiday, brunch, bar.
 
-Return a JSON object with days of the week as keys and hours as values.
+Return JSON with keys: main, kitchen (optional), pickup (optional), happy_hour (optional), holiday (optional), brunch (optional), bar (optional).
 
-Days: monday, tuesday, wednesday, thursday, friday, saturday, sunday
+- main: object with monday..sunday. Values like "9am-10pm" or "Closed". Dining/operating hours.
+- kitchen: same format if kitchen/last-order hours differ from main (e.g. kitchen closes 30 min before); omit if same or not mentioned.
+- pickup: same format if pickup/takeout/carryout hours differ from main; omit if same or not mentioned.
+- happy_hour, holiday, brunch, bar: strings (e.g. "Mon-Fri 3-6pm", "Thanksgiving: Closed"); omit if not mentioned.
 
-Examples:
-Input: "Mon-Fri 9am-10pm, Sat-Sun 10am-11pm"
-Output: {
-  "monday": "9am-10pm",
-  "tuesday": "9am-10pm", 
-  "wednesday": "9am-10pm",
-  "thursday": "9am-10pm",
-  "friday": "9am-10pm",
-  "saturday": "10am-11pm",
-  "sunday": "10am-11pm"
-}
+Example input: "Mon-Fri 11am-10pm, Sat-Sun 10am-11pm. Happy hour Mon-Fri 3-6pm. Carryout closes 30 min before."
+Output: {"main":{"monday":"11am-10pm",...},"pickup":{"monday":"11am-9:30pm",...},"happy_hour":"Mon-Fri 3-6pm"}
 
-Input: "Open daily 11am-9pm"
-Output: {
-  "monday": "11am-9pm",
-  "tuesday": "11am-9pm",
-  "wednesday": "11am-9pm", 
-  "thursday": "11am-9pm",
-  "friday": "11am-9pm",
-  "saturday": "11am-9pm",
-  "sunday": "11am-9pm"
-}
+Return ONLY valid JSON, no markdown.`
+              },
+              { role: "user", content: hours }
+            ],
+            temperature: 0.1,
+            max_completion_tokens: 500,
+          })
+          const raw = blobCompletion.choices[0]?.message?.content?.trim() || '{}'
+          const clean = raw.replace(/^```json\s*/, '').replace(/\s*```$/, '').replace(/^```\s*/, '')
+          const parsed = JSON.parse(clean || '{}') as HoursStructure
+          if (parsed.main) hoursResult.main = parsed.main
+          if (parsed.kitchen) hoursResult.kitchen = parsed.kitchen
+          if (parsed.pickup) hoursResult.pickup = parsed.pickup
+          if (parsed.happy_hour) hoursResult.happy_hour = parsed.happy_hour
+          if (parsed.holiday) hoursResult.holiday = parsed.holiday
+          if (parsed.brunch) hoursResult.brunch = parsed.brunch
+          if (parsed.bar) hoursResult.bar = parsed.bar
+          // Fallback: if AI returned flat object, treat as main
+          if (!hoursResult.main && typeof parsed === 'object' && !parsed.main && Object.keys(parsed).some(k => ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'].includes(k.toLowerCase()))) {
+            hoursResult.main = parsed as unknown as Record<string, string>
+          }
+        } else {
+          // Case 2: Individual fields
+          if (hoursMain && typeof hoursMain === 'string') {
+            hoursResult.main = await parseDayHoursWithAI(openai, hoursMain)
+          }
+          if (hoursKitchen && typeof hoursKitchen === 'string') {
+            hoursResult.kitchen = await parseDayHoursWithAI(openai, hoursKitchen)
+          }
+          if (hoursPickup && typeof hoursPickup === 'string') {
+            hoursResult.pickup = await parseDayHoursWithAI(openai, hoursPickup)
+          }
+          if (hoursHappyHour && typeof hoursHappyHour === 'string') {
+            hoursResult.happy_hour = hoursHappyHour.trim()
+          }
+          if (hoursHoliday && typeof hoursHoliday === 'string') {
+            hoursResult.holiday = hoursHoliday.trim()
+          }
+          if (hoursBrunch && typeof hoursBrunch === 'string') {
+            hoursResult.brunch = hoursBrunch.trim()
+          }
+          if (hoursBar && typeof hoursBar === 'string') {
+            hoursResult.bar = hoursBar.trim()
+          }
+        }
 
-Input: "Monday: 9am-5pm, Tuesday: 9am-5pm, Wednesday: Closed, Thursday: 9am-5pm, Friday: 9am-5pm, Saturday: 10am-4pm, Sunday: Closed"
-Output: {
-  "monday": "9am-5pm",
-  "tuesday": "9am-5pm",
-  "wednesday": "Closed",
-  "thursday": "9am-5pm", 
-  "friday": "9am-5pm",
-  "saturday": "10am-4pm",
-  "sunday": "Closed"
-}
-
-If a day is not mentioned, use null for that day.`
-            },
-            {
-              role: "user",
-              content: hours
-            }
-          ],
-          temperature: 0.1,
-          max_completion_tokens: 300,
-        })
-
-        const hoursResponse = hoursCompletion.choices[0]?.message?.content?.trim()
-        const parsedHours = JSON.parse(hoursResponse || '{}')
-        results.hours = parsedHours
+        if (Object.keys(hoursResult).length > 0) {
+          results.hours = hoursResult
+        } else if (hours && typeof hours === 'string') {
+          results.hours = hours
+        }
       } catch (error) {
         console.error('Hours parsing error:', error)
-        results.hours = {
-          monday: hours,
-          tuesday: hours,
-          wednesday: hours,
-          thursday: hours,
-          friday: hours,
-          saturday: hours,
-          sunday: hours
-        }
+        if (hours && typeof hours === 'string') results.hours = hours
       }
     }
 

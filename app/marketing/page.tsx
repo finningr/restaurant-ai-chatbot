@@ -2,9 +2,11 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Bot, CheckCircle, Star, ArrowRight, Users, MessageSquare, TrendingUp, Zap, Clock, DollarSign, BarChart3, Shield, Headphones, Globe, Smartphone, Award, Target, ChevronRight, Settings, Crown } from 'lucide-react'
+import { useSession, signOut } from 'next-auth/react'
+import { Bot, CheckCircle, Star, ArrowRight, Users, MessageSquare, TrendingUp, Zap, Clock, DollarSign, BarChart3, Shield, Headphones, Globe, Smartphone, Award, Target, ChevronRight, Settings, Crown, LayoutDashboard } from 'lucide-react'
 
 export default function MarketingPage() {
+  const { data: session, status } = useSession()
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -101,10 +103,27 @@ export default function MarketingPage() {
               <span className="text-2xl font-bold text-gray-900">RestaurantAI</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <Link href="/login" className="text-gray-600 hover:text-primary-600">Login</Link>
-              <Link href="/signup" className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700">
-                Join Beta
-              </Link>
+              {status === 'authenticated' && session ? (
+                <>
+                  <Link href="/dashboard" className="flex items-center gap-2 text-gray-600 hover:text-primary-600">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                  <button 
+                    onClick={() => signOut({ callbackUrl: '/marketing' })}
+                    className="text-gray-600 hover:text-primary-600"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" className="text-gray-600 hover:text-primary-600">Login</Link>
+                  <Link href="/signup" className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700">
+                    Join Beta
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -122,10 +141,10 @@ export default function MarketingPage() {
               reduces phone calls by 40%, provides 24/7 support for customers, and generates an average of $1,800 more revenue per month.
             </p>
             <div className="flex justify-center mb-12">
-              <a href="/demo" className="bg-white text-primary-600 px-12 py-4 rounded-lg font-semibold text-xl hover:bg-gray-100 flex items-center justify-center gap-3 shadow-lg">
+              <Link href="/demo" className="bg-white text-primary-600 px-12 py-4 rounded-lg font-semibold text-xl hover:bg-gray-100 flex items-center justify-center gap-3 shadow-lg">
                 <Bot className="w-6 h-6" />
                 Demo
-              </a>
+              </Link>
             </div>
             
             {/* Trust Indicators */}
@@ -353,7 +372,7 @@ export default function MarketingPage() {
                   const visits = parseInt(e.target.value) || 0;
                   const partySize = 2.5;
                   const customersWithoutBot = visits * 0.10;
-                  const customersWithBot = visits * 0.15;
+                  const customersWithBot = visits * 0.13; // Updated to 13% conversion rate
                   const withoutBot = customersWithoutBot * partySize;
                   const totalWithBot = customersWithBot * partySize;
                   const extraCustomers = totalWithBot - withoutBot;
@@ -418,7 +437,7 @@ export default function MarketingPage() {
                   </div>
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-gray-700">Conversion Rate with Chatbot:</span>
-                    <span className="font-semibold text-gray-900">15%</span>
+                    <span className="font-semibold text-gray-900">13%</span>
                   </div>
                   <div className="flex justify-between items-center mb-2">
                     <span className="text-gray-700">Customers:</span>
@@ -532,7 +551,7 @@ export default function MarketingPage() {
             <div>
               <h3 className="text-lg font-semibold mb-4">Legal</h3>
               <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white">Privacy Policy</a></li>
+                <li><Link href="/privacy" className="hover:text-white">Privacy Policy</Link></li>
                 <li><a href="#" className="hover:text-white">Terms of Service</a></li>
               </ul>
             </div>

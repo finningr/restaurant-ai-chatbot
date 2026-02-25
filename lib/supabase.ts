@@ -22,18 +22,26 @@ function createSupabaseAdmin(): SupabaseClient | null {
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
   
   if (!url || !serviceRoleKey) {
+    console.error('⚠️ Supabase Admin Client: Missing configuration', {
+      hasUrl: !!url,
+      hasServiceRoleKey: !!serviceRoleKey,
+      urlLength: url?.length || 0,
+      keyLength: serviceRoleKey?.length || 0
+    })
     return null
   }
   
   try {
-    return createClient(url, serviceRoleKey, {
+    const client = createClient(url, serviceRoleKey, {
       auth: {
         autoRefreshToken: false,
         persistSession: false
       }
     })
+    console.log('✅ Supabase Admin Client created successfully')
+    return client
   } catch (error) {
-    console.error('Failed to create Supabase admin client:', error)
+    console.error('❌ Failed to create Supabase admin client:', error)
     return null
   }
 }
@@ -57,15 +65,32 @@ const createSupabaseAdminProxy = (): SupabaseClient => {
       if (!client) {
         // During build time or when not configured, return safe defaults
         if (prop === 'from') {
-          return () => ({
-            select: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } })
-          })
+          return () => {
+            const mockPromise: Promise<any> = Promise.resolve({ data: null, error: { message: 'Supabase not configured' } })
+            // Ensure the mock promise has catch method
+            return {
+              select: () => mockPromise,
+              insert: (data: any) => mockPromise,
+              update: () => mockPromise,
+              delete: () => mockPromise,
+              upsert: () => mockPromise,
+              eq: () => ({ 
+                select: () => mockPromise, 
+                insert: () => mockPromise,
+                maybeSingle: () => mockPromise,
+                single: () => mockPromise
+              }),
+              maybeSingle: () => mockPromise,
+              single: () => mockPromise
+            }
+          }
         }
         // Return undefined for other properties
         return undefined
       }
-      const value = (client as any)[prop]
-      return typeof value === 'function' ? value.bind(client) : value
+      // When client exists, return the actual property value directly
+      // This ensures all methods and properties work correctly with chaining
+      return (client as any)[prop]
     }
   }
   
