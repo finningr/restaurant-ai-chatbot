@@ -1,47 +1,41 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getServerSession } from 'next-auth/next'
-import { authOptions, loadUsers } from '@/app/api/auth/[...nextauth]/route'
+import { loadUsers } from '../../auth/[...nextauth]/route'
 import { createInvite, getInviteByEmail, deleteInvite, generateInviteToken } from '@/lib/invites'
 import { sendInviteEmail } from '@/lib/email'
 
 export const dynamic = 'force-dynamic'
 
+/** Public endpoint: Restaurant Account Managers sign up with name + email. */
 export async function POST(request: NextRequest) {
   try {
-    const session = await getServerSession(authOptions)
-    if (!session) {
+    const { name, email } = await request.json()
+
+    if (!name || !email) {
       return NextResponse.json(
-        { error: 'Unauthorized - Please log in' },
-        { status: 401 }
+        { error: 'Name and email are required' },
+        { status: 400 }
       )
     }
 
-    const userRole = (session.user as any)?.role
-    if (userRole !== 'sales_rep') {
-      return NextResponse.json(
-        { error: 'Forbidden - Sales rep access required' },
-        { status: 403 }
-      )
-    }
+    const trimmedName = String(name).trim()
+    const trimmedEmail = String(email).trim().toLowerCase()
 
-    const { email, name } = await request.json()
-
-    if (!email || !name) {
+    if (!trimmedName || !trimmedEmail) {
       return NextResponse.json(
-        { error: 'Email and name are required' },
+        { error: 'Name and email are required' },
         { status: 400 }
       )
     }
 
     const users = loadUsers()
-    if (users.has(email)) {
+    if (users.has(trimmedEmail)) {
       return NextResponse.json(
-        { error: 'User with this email already exists' },
+        { error: 'An account with this email already exists. Please sign in.' },
         { status: 400 }
       )
     }
 
-    const existingInvite = await getInviteByEmail(email)
+    const existingInvite = await getInviteByEmail(trimmedEmail)
     if (existingInvite) {
       await deleteInvite(existingInvite.token)
     }
@@ -49,10 +43,10 @@ export async function POST(request: NextRequest) {
     const token = generateInviteToken()
     const { error: inviteError } = await createInvite({
       token,
-      email,
-      name,
+      email: trimmedEmail,
+      name: trimmedName,
       role: 'restaurant',
-      createdBy: session.user?.email || 'unknown',
+      createdBy: 'restaurant-beta-signup',
     })
 
     if (inviteError) {
@@ -62,10 +56,10 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'
+    const appUrl = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
     const { error: emailError } = await sendInviteEmail({
-      to: email,
-      name,
+      to: trimmedEmail,
+      name: trimmedName,
       role: 'restaurant',
       token,
     })
@@ -74,24 +68,22 @@ export async function POST(request: NextRequest) {
       const setupUrl = `${appUrl}/setup-account?token=${token}`
       return NextResponse.json(
         {
-          error: `Invite created but email failed to send: ${emailError}. Share this link manually: ${setupUrl}`,
+          error: `We couldn't send the email: ${emailError}. You can use this link to create your account: ${setupUrl}`,
           setupUrl,
         },
         { status: 500 }
       )
     }
 
-    console.log(`Sales rep ${session.user?.email} invited restaurant owner ${email}`)
-
     return NextResponse.json(
       {
-        message: 'Invite sent successfully',
-        email,
+        message: 'Check your email! We sent you a link to create your account.',
+        email: trimmedEmail,
       },
       { status: 201 }
     )
   } catch (error) {
-    console.error('Invite restaurant owner error:', error)
+    console.error('Restaurant beta invite error:', error)
     const message = error instanceof Error ? error.message : 'Failed to send invite'
     return NextResponse.json(
       { error: message },

@@ -1,20 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Bot, Home, ArrowLeft } from 'lucide-react'
+import { Bot, Home } from 'lucide-react'
 
 export default function SignUp() {
-  const router = useRouter()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    password: '',
-    confirmPassword: '',
-    restaurantName: ''
   })
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,46 +23,32 @@ export default function SignUp() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-
-    // Validation
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      return
-    }
-
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters')
-      return
-    }
-
     setIsLoading(true)
 
     try {
-      const response = await fetch('/api/signup', {
+      const response = await fetch('/api/invite/restaurant-beta', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          password: formData.password,
-          restaurantName: formData.restaurantName
+          name: formData.name.trim(),
+          email: formData.email.trim().toLowerCase(),
         }),
       })
 
       const data = await response.json()
 
       if (!response.ok) {
-        setError(data.error || 'Failed to create account')
+        setError(data.error || 'Failed to send invite')
         setIsLoading(false)
         return
       }
 
-      // Redirect to login page after successful signup
-      router.push('/login?success=Account created successfully!')
-    } catch (error) {
+      setSuccess(true)
+    } catch {
       setError('An error occurred. Please try again.')
+    } finally {
       setIsLoading(false)
     }
   }
@@ -82,8 +64,8 @@ export default function SignUp() {
                 <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
-                <span className="text-2xl font-bold text-gray-900">RestaurantAI</span>
-                <p className="text-xs text-gray-500">Sign Up</p>
+                <span className="text-2xl font-bold text-gray-900">Front of House AI</span>
+                <p className="text-xs text-gray-500">Join Beta</p>
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-8">
@@ -99,15 +81,13 @@ export default function SignUp() {
                 Join Beta
               </a>
             </div>
-            <div className="flex items-center space-x-4">
-              <Link 
-                href="/marketing"
-                className="flex items-center text-gray-500 hover:text-gray-700 transition-colors md:hidden"
-              >
-                <Home className="w-4 h-4 mr-2" />
-                <span className="text-sm font-medium">Home</span>
-              </Link>
-            </div>
+            <Link 
+              href="/marketing"
+              className="flex items-center text-gray-500 hover:text-gray-700 md:hidden"
+            >
+              <Home className="w-4 h-4 mr-2" />
+              <span className="text-sm font-medium">Home</span>
+            </Link>
           </div>
         </div>
       </nav>
@@ -119,105 +99,88 @@ export default function SignUp() {
               <div className="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Bot className="w-8 h-8 text-white" />
               </div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Join Our Beta Program</h1>
-              <p className="text-gray-600">Help us perfect the product while you get full access</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Join Beta as a Restaurant Account Manager</h1>
+              <p className="text-gray-600">
+                Enter your details and we&apos;ll send you an email to create your account.
+              </p>
             </div>
 
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
-                {error}
+            {success ? (
+              <div className="space-y-6">
+                <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-4 rounded-lg">
+                  <p className="font-medium">Check your email!</p>
+                  <p className="text-sm mt-1">
+                    We sent a link to <strong>{formData.email}</strong>. Click it to create your password and finish setting up your account.
+                  </p>
+                </div>
+                <p className="text-sm text-gray-600">
+                  Didn&apos;t get the email? Check your spam folder or{' '}
+                  <button
+                    type="button"
+                    onClick={() => { setSuccess(false); setFormData({ name: '', email: '' }) }}
+                    className="text-primary-600 hover:text-primary-700 font-medium"
+                  >
+                    try again
+                  </button>.
+                </p>
+                <Link
+                  href="/login"
+                  className="block w-full text-center py-3 px-4 rounded-lg border border-primary-600 text-primary-600 font-semibold hover:bg-primary-50 transition-colors"
+                >
+                  Go to Login
+                </Link>
               </div>
+            ) : (
+              <>
+                {error && (
+                  <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+                    {error}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                      Full Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500 bg-white"
+                      placeholder="Enter your full name"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-gray-900 placeholder-gray-500 bg-white"
+                      placeholder="Enter your email"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isLoading}
+                    className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+                  >
+                    {isLoading ? 'Sending...' : 'Send Me the Signup Link'}
+                  </button>
+                </form>
+              </>
             )}
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="Enter your full name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="Enter your email"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="restaurantName" className="block text-sm font-medium text-gray-700 mb-2">
-                  Restaurant Name
-                </label>
-                <input
-                  type="text"
-                  id="restaurantName"
-                  name="restaurantName"
-                  value={formData.restaurantName}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="Enter your restaurant name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                  Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="Create a password"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                  placeholder="Confirm your password"
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isLoading}
-                className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
-              >
-                {isLoading ? 'Creating Account...' : 'Create Account'}
-              </button>
-            </form>
 
             <div className="mt-6 text-center">
               <p className="text-gray-600">

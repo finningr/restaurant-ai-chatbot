@@ -437,10 +437,15 @@ function WidgetPageContent() {
     }
   }, [messages, isTyping])
 
-  const handleFeedback = async (messageId: string, feedback: 'positive' | 'negative') => {
+  const handleFeedback = async (messageId: string, feedback: 'positive' | 'negative', demoOnly = false) => {
     const message = messages.find(m => m.id === messageId)
-    if (!message || !message.conversation_log_id || message.feedback !== null) {
-      return // Can't provide feedback without conversation_log_id or already provided feedback
+    if (!message || message.feedback !== null) return
+    if (!demoOnly && !message.conversation_log_id) return // Need conversation_log_id for real feedback
+
+    // Demo: update local state only (no API call) so users see the UI
+    if (demoOnly) {
+      setMessages(prev => prev.map(msg => msg.id === messageId ? { ...msg, feedback } : msg))
+      return
     }
 
     try {
@@ -673,11 +678,11 @@ function WidgetPageContent() {
 
   return (
     <div className={isTestMode ? "" : "fixed bottom-4 right-4 z-50 w-[320px] h-[500px]"} style={isTestMode ? { width: '350px', height: '600px', margin: 0, padding: 0, position: 'relative', transform: 'none', zoom: 1 } : {}}>
-      <div className={`${styles.widgetContainer} flex flex-col ${isTestMode ? '' : 'h-full'}`} style={isTestMode ? { width: '350px', height: '600px', margin: 0, padding: 0, transform: 'none', zoom: 1 } : {}}>
+      <div className={`${styles.widgetContainer} flex flex-col ${isTestMode ? '' : 'h-full'}`} style={isTestMode ? { width: '350px', height: '600px', margin: 0, padding: 0, transform: 'none', zoom: 1, border: 'none', boxShadow: 'none', borderRadius: 0 } : {}}>
         <div className={styles.widgetHeader}>
             <div className={styles.headerContent}>
               <h3>{restaurantData?.name ? `${restaurantData.name} Assistant` : 'Restaurant Assistant'}</h3>
-              <p className={styles.poweredBy}>Powered by RestaurantAI</p>
+              <p className={styles.poweredBy}>Powered by Front of House AI</p>
             </div>
             <div className={styles.headerActions}>
               <button 
@@ -734,10 +739,10 @@ function WidgetPageContent() {
                   minute: '2-digit' 
                 })}
               </div>
-              {message.role === 'assistant' && message.conversation_log_id && (
+              {message.role === 'assistant' && (message.conversation_log_id || widgetId === 'demo') && (
                 <div className="flex items-center gap-2 mt-2">
                   <button
-                    onClick={() => handleFeedback(message.id, 'positive')}
+                    onClick={() => handleFeedback(message.id, 'positive', widgetId === 'demo')}
                     disabled={message.feedback !== null}
                     className={`p-1.5 rounded transition-colors ${
                       message.feedback === 'positive'
@@ -751,7 +756,7 @@ function WidgetPageContent() {
                     <ThumbsUp size={16} />
                   </button>
                   <button
-                    onClick={() => handleFeedback(message.id, 'negative')}
+                    onClick={() => handleFeedback(message.id, 'negative', widgetId === 'demo')}
                     disabled={message.feedback !== null}
                     className={`p-1.5 rounded transition-colors ${
                       message.feedback === 'negative'

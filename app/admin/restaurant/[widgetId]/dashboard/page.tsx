@@ -420,7 +420,7 @@ export default function AdminRestaurantDashboardPage() {
                       ? 'bg-green-100 text-green-800 hover:bg-green-200'
                       : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                   }`}
-                  title={isLocked ? 'Restaurant is locked - owner cannot log in' : 'Restaurant is unlocked'}
+                  title={isLocked ? 'Restaurant is locked - account manager cannot log in' : 'Restaurant is unlocked'}
                 >
                   {isLocked ? <Lock className="w-4 h-4" /> : <Unlock className="w-4 h-4" />}
                   {isLocked ? 'Locked' : 'Unlocked'}
@@ -448,7 +448,7 @@ export default function AdminRestaurantDashboardPage() {
                 className="flex items-center hover:opacity-80 transition-opacity"
               >
                 <Bot className="w-8 h-8 text-primary-600 mr-3" />
-                <span className="text-xl font-bold text-gray-900">RestaurantAI</span>
+                <span className="text-xl font-bold text-gray-900">Front of House AI</span>
               </button>
             </div>
             <div className="flex items-center space-x-4">
@@ -523,7 +523,7 @@ export default function AdminRestaurantDashboardPage() {
             </nav>
           </div>
 
-          {/* Tab Content - Reuse same structure as owner dashboard */}
+          {/* Tab Content - Reuse same structure as account manager dashboard */}
           <div className="p-6">
             {activeTab === 'overview' && (
               <div className="space-y-6">
@@ -582,7 +582,7 @@ export default function AdminRestaurantDashboardPage() {
                   </div>
                 </div>
 
-                {/* Charts and other analytics - same as owner dashboard */}
+                {/* Charts and other analytics - same as account manager dashboard */}
                 {analytics?.dailyActivity && analytics.dailyActivity.length > 0 && (
                   <div className="bg-white rounded-lg shadow-lg p-6">
                     <h3 className="text-xl font-semibold text-gray-900 mb-4">Monthly Activity</h3>

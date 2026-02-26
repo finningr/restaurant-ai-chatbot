@@ -176,7 +176,7 @@ export default function AdminUserViewPage({ params }: { params: { email: string 
                 className="flex items-center hover:opacity-80 transition-opacity"
               >
                 <Bot className="w-8 h-8 text-primary-600 mr-3" />
-                <span className="text-xl font-bold text-gray-900">RestaurantAI</span>
+                <span className="text-xl font-bold text-gray-900">Front of House AI</span>
               </button>
               <div className="hidden md:flex items-center space-x-4">
                 <button
@@ -246,7 +246,7 @@ export default function AdminUserViewPage({ params }: { params: { email: string 
                       ? 'bg-yellow-100 text-yellow-800'
                       : 'bg-green-100 text-green-800'
                   }`}>
-                    {role === 'sales_rep' ? 'Sales Representative' : role === 'admin' ? 'Admin' : 'Restaurant Owner'}
+                    {role === 'sales_rep' ? 'Sales Representative' : role === 'admin' ? 'Admin' : 'Restaurant Account Manager'}
                   </span>
                   {userInfo?.status === 'deleted' && (
                     <span className="px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
@@ -517,11 +517,11 @@ export default function AdminUserViewPage({ params }: { params: { email: string 
           </div>
         )}
 
-        {/* Restaurant Owner with no restaurants */}
+        {/* Restaurant Account Manager with no restaurants */}
         {role === 'restaurant' && restaurants.length === 0 && (
           <div className="bg-white rounded-lg shadow-lg p-8 text-center">
             <Building2 className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-            <p className="text-gray-500">This restaurant owner has no restaurants yet</p>
+            <p className="text-gray-500">This restaurant account manager has no restaurants yet</p>
           </div>
         )}
       </div>

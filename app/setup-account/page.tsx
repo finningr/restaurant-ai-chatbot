@@ -194,7 +194,7 @@ export default function SetupAccountPage() {
               <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center mr-3">
                 <Bot className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-bold text-gray-900">RestaurantAI</span>
+              <span className="text-2xl font-bold text-gray-900">Front of House AI</span>
             </div>
             <Link href="/marketing" className="flex items-center text-gray-600 hover:text-primary-600">
               <Home className="w-4 h-4 mr-2" />

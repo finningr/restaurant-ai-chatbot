@@ -290,7 +290,7 @@ export default function DashboardPage() {
                   className="flex items-center hover:opacity-80 transition-opacity"
                 >
                   <Bot className="w-8 h-8 text-primary-600 mr-3" />
-                  <span className="text-xl font-bold text-gray-900">RestaurantAI</span>
+                  <span className="text-xl font-bold text-gray-900">Front of House AI</span>
                 </button>
                 <div className="hidden md:flex items-center space-x-4">
                   <button
@@ -334,7 +334,7 @@ export default function DashboardPage() {
               </div>
               
               <h1 className="text-3xl font-bold text-gray-900 mb-4">
-                Welcome to RestaurantAI! 🎉
+                Welcome to Front of House AI! 🎉
               </h1>
               
               <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -416,7 +416,7 @@ export default function DashboardPage() {
               >
                 <Bot className="w-8 h-8 text-primary-600 mr-3" />
                 <div>
-                  <span className="text-xl font-bold text-gray-900">RestaurantAI</span>
+                  <span className="text-xl font-bold text-gray-900">Front of House AI</span>
                   {isAdmin && (
                     <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Admin</span>
                   )}

@@ -7,7 +7,8 @@ function getResendClient() {
 }
 
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL || 'Front of House <onboarding@resend.dev>'
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+// Use NEXTAUTH_URL for invite links when running locally so setup + login happen on same server
+const APP_URL = process.env.NEXTAUTH_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
 
 export async function sendInviteEmail(params: {
   to: string
@@ -18,6 +19,12 @@ export async function sendInviteEmail(params: {
   const resend = getResendClient()
   if (!resend) {
     return { error: 'RESEND_API_KEY not set. Add it to .env.local and restart the dev server.' }
+  }
+
+  if (FROM_EMAIL.includes('resend.dev')) {
+    return {
+      error: `RESEND_FROM_EMAIL not set or not loaded. Add RESEND_FROM_EMAIL="Front of House <noreply@frontofhouseai.com>" to .env.local and restart the dev server. Domain must be verified at resend.com/domains.`,
+    }
   }
 
   const setupUrl = `${APP_URL}/setup-account?token=${params.token}`

@@ -11,7 +11,7 @@ export default function PrivacyPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <Link href="/marketing" className="flex items-center hover:opacity-80 transition-opacity">
             <Bot className="w-8 h-8 text-primary-600 mr-3" />
-            <span className="text-xl font-bold text-gray-900">RestaurantAI</span>
+            <span className="text-xl font-bold text-gray-900">Front of House AI</span>
           </Link>
         </div>
       </nav>
@@ -45,7 +45,7 @@ export default function PrivacyPage() {
               <li>To provide and improve our chatbot service</li>
               <li>To respond to your questions and provide restaurant information</li>
               <li>To analyze chatbot performance and improve responses</li>
-              <li>To generate analytics and insights for restaurant owners</li>
+              <li>To generate analytics and insights for restaurant account managers</li>
               <li>To ensure the security and proper functioning of our service</li>
               <li>To train and improve our AI models for better customer service</li>
             </ul>
@@ -67,7 +67,7 @@ export default function PrivacyPage() {
               We share your conversation data with:
             </p>
             <ul className="list-disc list-inside space-y-2 text-gray-700 ml-4">
-              <li><strong>Restaurant Owners:</strong> The restaurant you are chatting with has access to conversation logs and analytics for their location</li>
+              <li><strong>Restaurant Account Managers:</strong> The restaurant you are chatting with has access to conversation logs and analytics for their location</li>
               <li><strong>Service Providers:</strong> We use third-party services (like OpenAI for AI responses) that process your messages to generate chatbot responses</li>
               <li><strong>Legal Requirements:</strong> We may disclose information if required by law or to protect our rights</li>
             </ul>

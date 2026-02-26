@@ -111,7 +111,7 @@ export default function SalesDashboardPage() {
                 className="flex items-center hover:opacity-80 transition-opacity"
               >
                 <Bot className="w-8 h-8 text-primary-600 mr-3" />
-                <span className="text-xl font-bold text-gray-900">RestaurantAI</span>
+                <span className="text-xl font-bold text-gray-900">Front of House AI</span>
               </button>
             </div>
             <div className="flex items-center space-x-4">
@@ -149,7 +149,7 @@ export default function SalesDashboardPage() {
                 className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors font-medium shadow-sm"
               >
                 <UserPlus className="w-5 h-5" />
-                Create Restaurant Owner
+                Create Restaurant Account Manager
               </button>
               <button
                 onClick={() => router.push('/manual-input?sales_rep=true')}
@@ -176,7 +176,7 @@ export default function SalesDashboardPage() {
                     className="inline-flex items-center gap-2 px-6 py-3 bg-white border-2 border-primary-600 text-primary-600 rounded-lg hover:bg-primary-50 transition-colors font-medium shadow-sm"
                   >
                     <UserPlus className="w-5 h-5" />
-                    Create Restaurant Owner
+                    Create Restaurant Account Manager
                   </button>
                   <button
                     onClick={() => router.push('/manual-input?sales_rep=true')}
@@ -268,14 +268,14 @@ export default function SalesDashboardPage() {
         </div>
       </div>
 
-      {/* Create Restaurant Owner Modal */}
+      {/* Create Restaurant Account Manager Modal */}
       {showInviteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-md w-full p-6">
             <div className="flex justify-between items-center mb-4">
               <h3 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
                 <UserPlus className="w-6 h-6 text-primary-600" />
-                Create Restaurant Owner
+                Create Restaurant Account Manager
               </h3>
               <button
                 onClick={() => {

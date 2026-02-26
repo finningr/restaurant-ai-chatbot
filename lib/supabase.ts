@@ -1,4 +1,10 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import path from 'path'
+
+// Force load .env.local - Next.js sometimes doesn't expose these to API routes
+if (typeof window === 'undefined') {
+  require('dotenv').config({ path: path.join(process.cwd(), '.env.local') })
+}
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -13,21 +19,17 @@ export const supabase = supabaseUrl && supabaseKey
 let _supabaseAdmin: SupabaseClient | null = null
 
 function createSupabaseAdmin(): SupabaseClient | null {
-  // Skip during build time - Next.js sets this during build
-  if (process.env.NEXT_PHASE === 'phase-production-build') {
-    return null
-  }
-  
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
   
   if (!url || !serviceRoleKey) {
-    console.error('⚠️ Supabase Admin Client: Missing configuration', {
-      hasUrl: !!url,
-      hasServiceRoleKey: !!serviceRoleKey,
-      urlLength: url?.length || 0,
-      keyLength: serviceRoleKey?.length || 0
-    })
+    if (process.env.NODE_ENV !== 'test') {
+      console.error('⚠️ Supabase Admin Client: Missing configuration', {
+        hasUrl: !!url,
+        hasServiceRoleKey: !!serviceRoleKey,
+        varNames: 'Need NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY',
+      })
+    }
     return null
   }
   
@@ -67,30 +69,35 @@ const createSupabaseAdminProxy = (): SupabaseClient => {
         if (prop === 'from') {
           return () => {
             const mockPromise: Promise<any> = Promise.resolve({ data: null, error: { message: 'Supabase not configured' } })
-            // Ensure the mock promise has catch method
-            return {
-              select: () => mockPromise,
-              insert: (data: any) => mockPromise,
-              update: () => mockPromise,
-              delete: () => mockPromise,
-              upsert: () => mockPromise,
-              eq: () => ({ 
-                select: () => mockPromise, 
-                insert: () => mockPromise,
-                maybeSingle: () => mockPromise,
-                single: () => mockPromise
-              }),
+            const chainable = {
+              eq: () => chainable,
+              is: () => chainable,
+              or: () => chainable,
               maybeSingle: () => mockPromise,
-              single: () => mockPromise
+              single: () => mockPromise,
+              select: () => chainable,
+            }
+            return {
+              select: () => chainable,
+              insert: () => ({ select: () => ({ single: () => mockPromise }), single: () => mockPromise }),
+              update: () => chainable,
+              delete: () => chainable,
+              upsert: () => chainable,
+              eq: () => chainable,
+              maybeSingle: () => mockPromise,
+              single: () => mockPromise,
             }
           }
         }
         // Return undefined for other properties
         return undefined
       }
-      // When client exists, return the actual property value directly
-      // This ensures all methods and properties work correctly with chaining
-      return (client as any)[prop]
+      // When client exists, return the actual property - bind methods to preserve `this`
+      const value = (client as any)[prop]
+      if (prop === 'from' && typeof value === 'function') {
+        return value.bind(client)
+      }
+      return value
     }
   }
   

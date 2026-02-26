@@ -100,7 +100,7 @@ export default function MarketingPage() {
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
               <Bot className="w-8 h-8 text-primary-600 mr-3" />
-              <span className="text-2xl font-bold text-gray-900">RestaurantAI</span>
+              <span className="text-2xl font-bold text-gray-900">Front of House AI</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               {status === 'authenticated' && session ? (
@@ -275,7 +275,7 @@ export default function MarketingPage() {
                     </div>
                     <div>
                       <p className="font-semibold text-sm">Restaurant Assistant</p>
-                      <p className="text-xs text-gray-500">Powered by RestaurantAI</p>
+                      <p className="text-xs text-gray-500">Powered by Front of House AI</p>
                     </div>
                   </div>
                   
@@ -524,7 +524,7 @@ export default function MarketingPage() {
             <div>
               <div className="flex items-center mb-4">
                 <Bot className="w-8 h-8 text-primary-400 mr-3" />
-                <span className="text-2xl font-bold">RestaurantAI</span>
+                <span className="text-2xl font-bold">Front of House AI</span>
               </div>
               <p className="text-gray-400">
                 The leading AI chatbot solution for restaurants. Increase customer engagement, reduce costs, and boost revenue.
@@ -558,7 +558,7 @@ export default function MarketingPage() {
           </div>
           
           <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 RestaurantAI. All rights reserved.</p>
+            <p>&copy; 2024 Front of House AI. All rights reserved.</p>
           </div>
         </div>
       </footer>

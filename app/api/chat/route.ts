@@ -519,6 +519,11 @@ Description: ${item.description}`
       systemMessage += `\n\nRESTAURANT INFORMATION:\n${restaurantContext}`
     }
 
+    // Demo mode: use "Sample" labels for all links
+    if (widget_id === 'demo') {
+      systemMessage += `\n\n🏷️ DEMO MODE: For delivery, reservation, and catering links, always use "Sample" in the link label. Examples: [Sample Uber Eats link](url), [Sample DoorDash link](url), [Sample reservation link](url), [Sample catering link](url), [Sample order on our website](url). Do not use "Order on Uber Eats"—use "Sample Uber Eats link" instead.`
+    }
+
     // Build messages array with conversation history
     const messages = [
       {

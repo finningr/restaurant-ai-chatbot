@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions, loadUsers } from '../../auth/[...nextauth]/route'
-import { createInvite, getInviteByEmail, generateInviteToken } from '@/lib/invites'
+import { createInvite, getInviteByEmail, deleteInvite, generateInviteToken } from '@/lib/invites'
 import { sendInviteEmail } from '@/lib/email'
 
 export const dynamic = 'force-dynamic'
@@ -53,10 +53,7 @@ export async function POST(request: NextRequest) {
 
     const existingInvite = await getInviteByEmail(email)
     if (existingInvite) {
-      return NextResponse.json(
-        { error: 'Invite already sent to this email' },
-        { status: 400 }
-      )
+      await deleteInvite(existingInvite.token)
     }
 
     const token = generateInviteToken()
@@ -75,7 +72,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.NEXTAUTH_URL || 'http://localhost:3000'
     const { error: emailError } = await sendInviteEmail({
       to: email,
       name,

@@ -12,7 +12,7 @@ export default function ContactPage() {
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
               <Bot className="w-8 h-8 text-blue-600 mr-3" />
-              <span className="text-2xl font-bold text-gray-900">RestaurantAI</span>
+              <span className="text-2xl font-bold text-gray-900">Front of House AI</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors duration-200">About Us</Link>

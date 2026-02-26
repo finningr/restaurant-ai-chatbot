@@ -449,7 +449,7 @@ export default function AdminPage() {
                 className="flex items-center hover:opacity-80 transition-opacity"
               >
                 <Bot className="w-8 h-8 text-primary-600 mr-3" />
-                <span className="text-xl font-bold text-gray-900">RestaurantAI</span>
+                <span className="text-xl font-bold text-gray-900">Front of House AI</span>
               </button>
               <div className="hidden md:flex items-center space-x-4">
                 <button
@@ -513,7 +513,7 @@ export default function AdminPage() {
                   }`}
                 >
                   <Users className="w-4 h-4" />
-                  Restaurant Owners ({allUsers.filter(u => u.role === 'restaurant').length})
+                  Restaurant Account Managers ({allUsers.filter(u => u.role === 'restaurant').length})
                 </button>
                 <button
                   onClick={() => setActiveTab('sales-reps')}
@@ -577,11 +577,11 @@ export default function AdminPage() {
                   </div>
               ) : (
                 <>
-                  {/* Restaurant Owners Tab */}
+                  {/* Restaurant Account Managers Tab */}
                   {activeTab === 'owners' && (
                     <div className="space-y-4">
-                      <h2 className="text-2xl font-semibold text-gray-900">Restaurant Owners</h2>
-                      <p className="text-sm text-gray-500">Account managers who own restaurant dashboards. Deleting an owner is permanent and does not delete their restaurants.</p>
+                      <h2 className="text-2xl font-semibold text-gray-900">Restaurant Account Managers</h2>
+                      <p className="text-sm text-gray-500">Account managers who own restaurant dashboards. Deleting an account manager is permanent and does not delete their restaurants.</p>
                       <div className="grid gap-4">
                         {allUsers.filter(u => u.role === 'restaurant').map((user) => (
                           <div
@@ -651,7 +651,7 @@ export default function AdminPage() {
                                         })
                                       }}
                                       className="p-2 text-yellow-600 hover:bg-yellow-50 rounded-lg transition-colors"
-                                      title="Pause owner"
+                                      title="Pause account manager"
                                     >
                                       <Pause className="w-4 h-4" />
                                     </button>
@@ -667,7 +667,7 @@ export default function AdminPage() {
                                         })
                                       }}
                                       className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-                                      title="Activate owner"
+                                      title="Activate account manager"
                                     >
                                       <Play className="w-4 h-4" />
                                     </button>
@@ -682,7 +682,7 @@ export default function AdminPage() {
                                       })
                                     }}
                                     className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                    title="Permanently delete owner"
+                                    title="Permanently delete account manager"
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </button>
@@ -694,7 +694,7 @@ export default function AdminPage() {
                         {allUsers.filter(u => u.role === 'restaurant').length === 0 && (
                           <div className="text-center py-12 text-gray-500">
                             <Users className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                            <p>No restaurant owners found</p>
+                            <p>No restaurant account managers found</p>
                           </div>
                         )}
                       </div>
@@ -819,7 +819,7 @@ export default function AdminPage() {
                   {activeTab === 'restaurants' && (
                 <div className="space-y-4">
                       <h2 className="text-2xl font-semibold text-gray-900">Restaurants</h2>
-                      <p className="text-sm text-gray-500">Deleting a restaurant is permanent. It does not delete the owner account.</p>
+                      <p className="text-sm text-gray-500">Deleting a restaurant is permanent. It does not delete the account manager.</p>
                       <div className="grid gap-4">
                         {restaurants.map((restaurant) => (
                           <div
@@ -956,7 +956,7 @@ export default function AdminPage() {
                                           setConfirmAction({
                                             type: 'delete-restaurant',
                                             item: restaurant,
-                                            message: `Permanently delete ${restaurant.name}? This cannot be undone. All menu data and chatbot settings will be removed. The owner account will not be deleted.`
+                                            message: `Permanently delete ${restaurant.name}? This cannot be undone. All menu data and chatbot settings will be removed. The account manager will not be deleted.`
                                           })
                                         }}
                                         className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -1100,7 +1100,7 @@ export default function AdminPage() {
                                           <p className="text-sm text-gray-500">
                                             {session.session_type === 'admin' ? 'Admin' : 
                                              session.session_type === 'sales_rep' ? 'Sales Rep' : 
-                                             session.session_type === 'owner' ? 'Restaurant Owner' : 'User'}
+                                             session.session_type === 'owner' ? 'Restaurant Account Manager' : 'User'}
                                           </p>
                                         </div>
                                       </div>
@@ -1297,7 +1297,7 @@ export default function AdminPage() {
                                           }`}>
                                             {activity.user_role === 'admin' ? 'Admin' : 
                                              activity.user_role === 'sales_rep' ? 'Sales Rep' : 
-                                             'Owner'}
+                                             'Account Manager'}
                                           </span>
                                           <span className="px-2 py-1 rounded text-xs font-medium bg-gray-100 text-gray-800">
                                             {activity.action_type.replace(/_/g, ' ')}
@@ -2501,7 +2501,7 @@ export default function AdminPage() {
                             <span className="text-red-600 font-bold">✗</span>
                           )}
                           <span className="text-gray-700 capitalize">
-                            {key === 'ownerEmail' ? 'Owner Email' :
+                            {key === 'ownerEmail' ? 'Account Manager Email' :
                              key === 'priceRange' ? 'Price Range' :
                              key === 'websiteUrl' ? 'Website URL' :
                              key === 'menuItems' ? `Menu Items${factor.count ? ` (${factor.count})` : ''}` :

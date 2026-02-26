@@ -626,10 +626,10 @@ export default function MenuReview({ menuItems, restaurantInfo, onApprove, onCan
                 </div>
               </div>
 
-              {/* Owner Email Field */}
+              {/* Account Manager Email Field */}
               <div className="flex items-start gap-3">
                 <div className="flex-1">
-                  <span className="font-semibold text-gray-700">Owner Email:</span>
+                  <span className="font-semibold text-gray-700">Account Manager Email:</span>
                   {editingField === 'ownerEmail' ? (
                     <div className="mt-1 space-y-3">
                       <input

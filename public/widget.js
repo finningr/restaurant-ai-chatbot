@@ -1,5 +1,5 @@
 /**
- * Restaurant AI Chatbot Widget
+ * Front of House AI Chatbot Widget
  * Embeddable script for websites
  */
 
