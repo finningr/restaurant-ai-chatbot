@@ -12,9 +12,9 @@ export function setPreviewData(token: string, data: any): void {
     expiresAt: Date.now() + TTL_MS
   })
   // Cleanup expired entries
-  for (const [k, v] of previewCache.entries()) {
+  Array.from(previewCache.entries()).forEach(([k, v]) => {
     if (v.expiresAt < Date.now()) previewCache.delete(k)
-  }
+  })
 }
 
 export function getPreviewData(token: string): any | null {
