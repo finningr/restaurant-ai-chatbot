@@ -1,34 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
-import path from 'path'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '../../../auth/[...nextauth]/route'
+import { getUserByEmail, updateUserStatus } from '@/lib/users-db'
 
 export const dynamic = 'force-dynamic'
 
-function loadUsers() {
-  const usersFile = path.join(process.cwd(), 'users.json')
-  try {
-    if (fs.existsSync(usersFile)) {
-      const data = fs.readFileSync(usersFile, 'utf8')
-      return new Map(JSON.parse(data))
-    }
-  } catch (error) {
-    console.log('Error loading users, creating new store')
-  }
-  return new Map()
-}
-
-function saveUsers(users: Map<any, any>) {
-  const usersFile = path.join(process.cwd(), 'users.json')
-  try {
-    const usersArray = Array.from(users.entries())
-    fs.writeFileSync(usersFile, JSON.stringify(usersArray, null, 2))
-  } catch (error) {
-    console.error('Error saving users:', error)
-  }
-}
-
 export async function POST(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    if ((session.user as any)?.role !== 'admin') {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+
     const { email, status } = await request.json()
 
     if (!email || !status) {
@@ -45,9 +31,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const users = loadUsers()
-    const user = users.get(email)
-
+    const user = await getUserByEmail(email)
     if (!user) {
       return NextResponse.json(
         { error: 'User not found' },
@@ -55,10 +39,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Update user status
-    user.status = status
-    users.set(email, user)
-    saveUsers(users)
+    const { error: updateError } = await updateUserStatus(email, status as 'active' | 'paused' | 'deleted')
+    if (updateError) {
+      console.error('updateUserStatus error:', updateError)
+      return NextResponse.json({ error: 'Failed to update user status' }, { status: 500 })
+    }
 
     return NextResponse.json({
       success: true,
@@ -66,7 +51,7 @@ export async function POST(request: NextRequest) {
         email: user.email,
         name: user.name,
         role: user.role,
-        status: user.status
+        status
       },
       message: status === 'paused' 
         ? 'User paused successfully' 

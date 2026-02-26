@@ -1,51 +1,7 @@
 import NextAuth from 'next-auth'
 import type { NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import fs from 'fs'
-import path from 'path'
-
-// File-based storage
-const usersFile = path.join(process.cwd(), 'users.json')
-
-// Load users from file or create default (bcrypt imported inside to avoid webpack issues)
-function loadUsers(): Map<string, any> {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const bcrypt = require('bcryptjs')
-  try {
-    if (fs.existsSync(usersFile)) {
-      const data = fs.readFileSync(usersFile, 'utf8')
-      return new Map(JSON.parse(data))
-    }
-  } catch (error) {
-    console.log('Error loading users, creating new store')
-  }
-  
-  // Create new users map with admin
-  const users = new Map()
-  const adminPassword = bcrypt.hashSync('admin123', 10)
-  users.set('admin@restaurantai.com', {
-    id: 'admin-1',
-    email: 'admin@restaurantai.com',
-    password: adminPassword,
-    name: 'Admin User',
-    restaurantName: 'Front of House AI',
-    role: 'admin',
-    hasChatbot: true,
-    createdAt: new Date().toISOString()
-  })
-  saveUsers(users)
-  return users
-}
-
-function saveUsers(users: Map<any, any>): void {
-  fs.writeFileSync(usersFile, JSON.stringify(Array.from(users.entries())))
-}
-
-let _users: Map<string, any> | null = null
-function getUsers() {
-  if (!_users) _users = loadUsers()
-  return _users
-}
+import { getUserByEmail } from '@/lib/users-db'
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -63,13 +19,10 @@ export const authOptions: NextAuthOptions = {
           return null
         }
 
-        // Reload users to get latest
-        const currentUsers = loadUsers()
-        const user = currentUsers.get(credentials.email)
+        const user = await getUserByEmail(credentials.email)
         
         if (!user) {
           console.log('User not found:', credentials.email)
-          console.log('Available users:', Array.from(currentUsers.keys()))
           return null
         }
 
@@ -126,9 +79,6 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || 'dev-secret-key-at-least-32-characters-long',
   debug: process.env.NODE_ENV === 'development',
 }
-
-// Export functions for signup
-export { getUsers as users, loadUsers, saveUsers }
 
 const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
-import { authOptions, loadUsers } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { userExists } from '@/lib/users-db'
 import { createInvite, getInviteByEmail, deleteInvite, generateInviteToken } from '@/lib/invites'
 import { sendInviteEmail } from '@/lib/email'
 
@@ -33,8 +34,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const users = loadUsers()
-    if (users.has(email)) {
+    if (await userExists(email)) {
       return NextResponse.json(
         { error: 'User with this email already exists' },
         { status: 400 }

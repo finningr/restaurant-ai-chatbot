@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../auth/[...nextauth]/route'
-import { loadUsers, saveUsers } from '../../auth/[...nextauth]/route'
+import { userExists, createUser } from '@/lib/users-db'
 
 export const dynamic = 'force-dynamic'
 
@@ -48,11 +48,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Load current users
-    const users = loadUsers()
-
     // Check if user already exists
-    if (users.has(email)) {
+    if (await userExists(email)) {
       return NextResponse.json(
         { error: 'User with this email already exists' },
         { status: 400 }
@@ -61,26 +58,25 @@ export async function POST(request: NextRequest) {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10)
+    const newUserId = `user-${Date.now()}`
 
-    // Create new user
-    const newUser: any = {
-      id: `user-${Date.now()}`,
+    const { error: createError } = await createUser({
+      id: newUserId,
       email,
       password: hashedPassword,
       name,
       role: userRoleToCreate,
       hasChatbot: userRoleToCreate === 'admin',
-      status: 'active', // Default status for new users
-      createdAt: new Date().toISOString()
-    }
-    
-    // Only set restaurantName for restaurant owners
-    if (userRoleToCreate === 'restaurant' && restaurantName) {
-      newUser.restaurantName = restaurantName
-    }
+      restaurantName: userRoleToCreate === 'restaurant' ? restaurantName : undefined,
+    })
 
-    users.set(email, newUser)
-    saveUsers(users)
+    if (createError) {
+      console.error('createUser error:', createError)
+      return NextResponse.json(
+        { error: 'Failed to create user' },
+        { status: 500 }
+      )
+    }
 
     console.log(`Admin ${session.user?.email} created new user: ${email} with role: ${userRoleToCreate}`)
 
@@ -88,10 +84,10 @@ export async function POST(request: NextRequest) {
       { 
         message: 'User created successfully',
         user: {
-          id: newUser.id,
-          email: newUser.email,
-          name: newUser.name,
-          role: newUser.role
+          id: newUserId,
+          email,
+          name,
+          role: userRoleToCreate
         }
       },
       { status: 201 }

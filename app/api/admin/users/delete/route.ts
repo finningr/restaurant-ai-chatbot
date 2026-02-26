@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from '../../../auth/[...nextauth]/route'
-import { loadUsers, saveUsers } from '../../../auth/[...nextauth]/route'
+import { getUserByEmail, deleteUser } from '@/lib/users-db'
 import { logActivity, getClientIP, getUserAgent } from '@/lib/activity-logger'
 
 export const dynamic = 'force-dynamic'
@@ -21,21 +21,22 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email is required' }, { status: 400 })
     }
 
-    const users = loadUsers()
-    if (!users.has(email)) {
+    const userToDelete = await getUserByEmail(email)
+    if (!userToDelete) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 })
     }
-
-    const userToDelete = users.get(email)!
-    if ((userToDelete as any)?.role === 'admin') {
+    if (userToDelete.role === 'admin') {
       return NextResponse.json({ error: 'Cannot delete admin users' }, { status: 403 })
     }
 
-    const deletedName = (userToDelete as any)?.name ?? 'Unknown'
-    const deletedRole = (userToDelete as any)?.role ?? 'unknown'
+    const deletedName = userToDelete.name ?? 'Unknown'
+    const deletedRole = userToDelete.role ?? 'unknown'
 
-    users.delete(email)
-    saveUsers(users)
+    const { error: deleteError } = await deleteUser(email)
+    if (deleteError) {
+      console.error('deleteUser error:', deleteError)
+      return NextResponse.json({ error: 'Failed to delete user' }, { status: 500 })
+    }
 
     // Log deletion for audit trail (non-blocking)
     await logActivity({

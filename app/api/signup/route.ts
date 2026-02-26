@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { loadUsers, saveUsers } from '../auth/[...nextauth]/route'
+import { userExists, createUser } from '@/lib/users-db'
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,11 +14,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Load current users
-    const users = loadUsers()
-
     // Check if user already exists
-    if (users.has(email)) {
+    if (await userExists(email)) {
       return NextResponse.json(
         { error: 'User with this email already exists' },
         { status: 400 }
@@ -27,33 +24,36 @@ export async function POST(request: NextRequest) {
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10)
+    const newUserId = `user-${Date.now()}`
 
-    // Create new user
-    const newUser = {
-      id: `user-${Date.now()}`,
+    const { error: createError } = await createUser({
+      id: newUserId,
       email,
       password: hashedPassword,
       name,
       restaurantName,
-      role: 'restaurant' as const,
+      role: 'restaurant',
       hasChatbot: false,
-      createdAt: new Date().toISOString()
+    })
+
+    if (createError) {
+      console.error('createUser error:', createError)
+      return NextResponse.json(
+        { error: 'Failed to create account' },
+        { status: 500 }
+      )
     }
 
-    users.set(email, newUser)
-    saveUsers(users)
-
     console.log('New user created:', email)
-    console.log('Total users now:', users.size)
 
     return NextResponse.json(
       { 
         message: 'Account created successfully',
         user: {
-          id: newUser.id,
-          email: newUser.email,
-          name: newUser.name,
-          restaurantName: newUser.restaurantName
+          id: newUserId,
+          email,
+          name,
+          restaurantName
         }
       },
       { status: 201 }

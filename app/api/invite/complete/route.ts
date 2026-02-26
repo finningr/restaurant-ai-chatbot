@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { loadUsers, saveUsers } from '../../auth/[...nextauth]/route'
 import { getInviteByToken, deleteInvite } from '@/lib/invites'
+import { userExists, createUser } from '@/lib/users-db'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,8 +32,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const users = loadUsers()
-    if (users.has(invite.email)) {
+    if (await userExists(invite.email)) {
       return NextResponse.json(
         { error: 'An account with this email already exists. Please log in.' },
         { status: 400 }
@@ -41,19 +40,22 @@ export async function POST(request: NextRequest) {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
-    const newUser = {
+    const { error: createError } = await createUser({
       id: `user-${Date.now()}`,
       email: invite.email,
       password: hashedPassword,
       name: invite.name,
       role: invite.role,
       hasChatbot: invite.role === 'admin',
-      status: 'active',
-      createdAt: new Date().toISOString(),
-    }
+    })
 
-    users.set(invite.email, newUser)
-    saveUsers(users)
+    if (createError) {
+      console.error('createUser error:', createError)
+      return NextResponse.json(
+        { error: 'Failed to create account' },
+        { status: 500 }
+      )
+    }
 
     const { error: deleteError } = await deleteInvite(token)
     if (deleteError) {
