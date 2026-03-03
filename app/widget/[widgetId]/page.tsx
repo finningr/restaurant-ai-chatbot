@@ -665,8 +665,8 @@ function WidgetPageContent() {
 
   if (isLoading) {
     return (
-      <div className={isTestMode ? "w-full h-full bg-gray-100" : "fixed bottom-4 right-4 z-50 w-[320px] h-[500px]"}>
-        <div className="bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col h-full">
+      <div className="w-full h-full" style={{ width: '100%', height: '100%', margin: 0, padding: 0 }}>
+        <div className="bg-white flex flex-col h-full" style={{ width: '100%', height: '100%' }}>
           <div className={styles.widgetLoading}>
             <div className={styles.loadingSpinner}></div>
             <p>Loading...</p>
@@ -677,8 +677,8 @@ function WidgetPageContent() {
   }
 
   return (
-    <div className={isTestMode ? "" : "fixed bottom-4 right-4 z-50 w-[320px] h-[500px]"} style={isTestMode ? { width: '350px', height: '600px', margin: 0, padding: 0, position: 'relative', transform: 'none', zoom: 1 } : {}}>
-      <div className={`${styles.widgetContainer} flex flex-col ${isTestMode ? '' : 'h-full'}`} style={isTestMode ? { width: '350px', height: '600px', margin: 0, padding: 0, transform: 'none', zoom: 1, border: 'none', boxShadow: 'none', borderRadius: 0 } : {}}>
+    <div style={{ width: '100%', height: '100%', margin: 0, padding: 0, position: 'relative' }}>
+      <div className={`${styles.widgetContainer} flex flex-col`} style={{ width: '100%', height: '100%', margin: 0, padding: 0, borderRadius: isTestMode ? 0 : undefined, boxShadow: isTestMode ? 'none' : undefined, border: isTestMode ? 'none' : undefined }}>
         <div className={styles.widgetHeader}>
             <div className={styles.headerContent}>
               <h3>{restaurantData?.name ? `${restaurantData.name} Assistant` : 'Restaurant Assistant'}</h3>
